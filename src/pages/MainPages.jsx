@@ -6,15 +6,33 @@ import { fetchmovies } from "../features/movieSlice";
 import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
+import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
 
 const MainPages = () => {
+  const [value, setValue] = useState('');
+
+  function chengeSelect(event) {
+     window.location.href = `/genre/${event.target.value}`
+     setValue(event.target.value)
+  }
+  
   const dispatch = useDispatch();
+  const { id } = useParams();
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
   }, [dispatch]);
   const movies = useSelector((state) => state.movies.movies);
   const genres = useSelector((state) => state.genres.genres);
+
+  // const moviefilters = movies.filter((item) => {
+  //   if (!id) {
+  //     return true;
+  //   }
+  //  return item.genre.nameGenre.toLowerCase().includes(value.toLowerCase().toString())
+  // });
+  console.log(id)
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -27,12 +45,18 @@ const MainPages = () => {
           <div>Платные</div>
         </div>
         <div className={styles.categoryfilters_select}>
-          <select className={styles.select_css} name="Жанры">
-            <option value=""> Все жанры</option>
+          <form>
+          <select value={value} onChange={chengeSelect} className={styles.select_css} name="Жанры">
+            <option> Все жанры</option>
             {genres.map((genre) => {
-              return <option>{genre.nameGenre}</option>;
+              return (
+                <option>
+                  {genre.nameGenre}
+                </option>
+              );
             })}
           </select>
+          </form>
         </div>
         <div className={styles.categoryfilters_select}>
           <select className={styles.select_css}>
