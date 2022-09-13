@@ -1,0 +1,42 @@
+.movie_page {
+  margin: auto;
+  width: 90%;
+  color: white;
+}
+.treiler {
+  display: flex;
+  justify-content: center;
+}
+
+.movie_page h1 {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.movie_info {
+  margin: 30px auto;
+  width: 90%;
+  display: flex;
+}
+
+.image img {
+  margin-right: 30px;
+  height: 350px;
+  border-radius: 10px;
+}
+
+.info_list {
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 22px;
+}
+
+.description {
+  width: 90%;
+  margin: 30px auto;
+  font-size: 20px;
+  line-height: 35px;
+  padding: 10px;
+}
