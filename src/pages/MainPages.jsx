@@ -8,10 +8,9 @@ import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
-
 const MainPages = () => {
   const dispatch = useDispatch();
+  const years = [2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009]
 
   const { id } = useParams();
 
@@ -23,8 +22,17 @@ const MainPages = () => {
   }, [dispatch]);
 
   const genres = useSelector((state) => state.genres.genres);
-  const moviesFilter = useSelector((state) => state.movies.moviesFilter);
+  const movies = useSelector((state) => state.movies.movies);
 
+
+  const filteredgenre = movies.filter((item)=>{
+    if(!id){
+      return true
+    }
+    return  item.genre.includes(id) 
+  }) 
+  console.log(id)
+  
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -48,17 +56,13 @@ const MainPages = () => {
             })}
           </ul>
         </div>
-        <div className={styles.categoryfilters_select}>
-          <select className={styles.select_css}>
-            <option value="">Все года</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-          </select>
+        <div className={styles.dropdown}>
+        <button className={styles.dropbtn}>Все года</button>
+          <ul className={styles.dropdown_content}>
+            {years.map((i)=>{
+              return <li><Link to={`years/${i}`}>{i}</Link></li>
+            })}
+          </ul>
         </div>
         <div className={styles.categoryfilters_select}>
           <select className={styles.select_css}>
@@ -75,7 +79,7 @@ const MainPages = () => {
         <div><button onClick={()=>  dispatch(filterMovies(id))}>ddddd</button></div>
       </div>
       <div className={styles.main_content}>
-        {moviesFilter.map((movie) => {
+        {filteredgenre.map((movie) => {
           return <Movie movie={movie} />;
         })}
       </div>
