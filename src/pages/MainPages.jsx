@@ -11,8 +11,10 @@ import { Link, useParams } from "react-router-dom";
 const MainPages = () => {
   const dispatch = useDispatch();
   const years = [2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009]
-
-  const { id } = useParams();
+  const country = ["Россия","США","Великобритания","Франция", "Испания"]
+  const params = useParams();
+  const id = params.id
+  const yearid = params.cat
 
 
 
@@ -26,10 +28,11 @@ const MainPages = () => {
 
 
   const filteredgenre = movies.filter((item)=>{
+    console.log(item.year)
     if(!id){
       return true
     }
-    return  item.genre.includes(id) 
+    return item.genre.includes(id) || item.year == id ||item.country == id
   }) 
   console.log(id)
   
@@ -60,23 +63,20 @@ const MainPages = () => {
         <button className={styles.dropbtn}>Все года</button>
           <ul className={styles.dropdown_content}>
             {years.map((i)=>{
-              return <li><Link to={`years/${i}`}>{i}</Link></li>
+              return <li><Link to={`/years/${i}`}>{i}</Link></li>
             })}
           </ul>
         </div>
-        <div className={styles.categoryfilters_select}>
-          <select className={styles.select_css}>
-            <option value=""> Все страны</option>
-            <option value="2022">Россия</option>
-            <option value="2021">США</option>
-            <option value="2020">ГЕРМАНИЯ</option>
-            <option value="2019">КОРЕЯ</option>
-            <option value="2018">ФРАНЦИЯ</option>
-            <option value="2017">АНГЛИЯ</option>
-            <option value="2016">ЯПОНИЯ</option>
-          </select>
+        <div className={styles.dropdown}>
+        <button className={styles.dropbtn}>Все года</button>
+          <ul className={styles.dropdown_content}>
+            {country.map((i)=>{
+              return <li><Link to={`/country/${i}`}>{i}</Link></li>
+            })}
+          </ul>
         </div>
-        <div><button onClick={()=>  dispatch(filterMovies(id))}>ddddd</button></div>
+      
+        
       </div>
       <div className={styles.main_content}>
         {filteredgenre.map((movie) => {
