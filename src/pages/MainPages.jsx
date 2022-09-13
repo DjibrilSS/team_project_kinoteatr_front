@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchmovies } from "../features/movieSlice";
+import { fetchmovies} from "../features/movieSlice";
+import { filterMovies } from "../features/movieSlice";
 import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
@@ -10,29 +11,20 @@ import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 
 const MainPages = () => {
-  const [value, setValue] = useState('');
-
-  function chengeSelect(event) {
-     window.location.href = `/genre/${event.target.value}`
-     setValue(event.target.value)
-  }
-  
   const dispatch = useDispatch();
+
   const { id } = useParams();
+
+
+
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
   }, [dispatch]);
-  const movies = useSelector((state) => state.movies.movies);
-  const genres = useSelector((state) => state.genres.genres);
 
-  // const moviefilters = movies.filter((item) => {
-  //   if (!id) {
-  //     return true;
-  //   }
-  //  return item.genre.nameGenre.toLowerCase().includes(value.toLowerCase().toString())
-  // });
-  console.log(id)
+  const genres = useSelector((state) => state.genres.genres);
+  const moviesFilter = useSelector((state) => state.movies.moviesFilter);
+
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -44,19 +36,17 @@ const MainPages = () => {
           <div>Бесплатные</div>
           <div>Платные</div>
         </div>
-        <div className={styles.categoryfilters_select}>
-          <form>
-          <select value={value} onChange={chengeSelect} className={styles.select_css} name="Жанры">
-            <option> Все жанры</option>
+        <div className={styles.dropdown}>
+          <button className={styles.dropbtn}>Все Жанры</button>
+          <ul className={styles.dropdown_content} name="Жанры">
             {genres.map((genre) => {
               return (
-                <option>
-                  {genre.nameGenre}
-                </option>
+                <li>
+                  <Link to={`/genre/${genre._id}`}> {genre.nameGenre}</Link>
+                </li>
               );
             })}
-          </select>
-          </form>
+          </ul>
         </div>
         <div className={styles.categoryfilters_select}>
           <select className={styles.select_css}>
@@ -82,9 +72,10 @@ const MainPages = () => {
             <option value="2016">ЯПОНИЯ</option>
           </select>
         </div>
+        <div><button onClick={()=>  dispatch(filterMovies(id))}>ddddd</button></div>
       </div>
       <div className={styles.main_content}>
-        {movies.map((movie) => {
+        {moviesFilter.map((movie) => {
           return <Movie movie={movie} />;
         })}
       </div>
