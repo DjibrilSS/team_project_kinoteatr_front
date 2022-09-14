@@ -3,6 +3,8 @@ import "./App.css";
 import Header from "./components/Header";
 import MainPages from "./pages/MainPages";
 import MoviePage from "./components/MoviePage";
+import SingIn from "./components/SingIn";
+import SingUp from "./components/SingUp";
 
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<MainPages />} />
+        <Route path="/login" element={<SingIn />} />
+        <Route path="/auth" element={<SingUp />} />
         <Route path="/genre/:id/" element={<MainPages />} />
         <Route path="/movie/:id" element={<MoviePage />} />
         <Route path="/years/:id/" element={<MainPages />} />
