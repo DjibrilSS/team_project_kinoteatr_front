@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  users: "",
-  favorite: [],
-};
+    users: [],
+    favorite: [],
+    load:false
+}
+
 
 export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
   try {
@@ -41,16 +43,26 @@ export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
 //   }
 // );
 
-const moviesSclice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.users = action.payload;
-    });
-  },
-});
+const userSclice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {},
+    extraReducers:(builder)=>{
+        builder
+        .addCase(fetchUser.fulfilled,(state,action)=>{
+            state.users = action.payload
+            state.load= false
+        })
+        .addCase(fetchUser.pending,(state,action)=>{
+            
+            state.load= true
+        })
+        
 
-export default moviesSclice.reducer;
+       
+    }
+})
+
+
+export default userSclice.reducer
+
