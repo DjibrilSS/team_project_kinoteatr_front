@@ -1,52 +1,67 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    users: [],
-    load:false
-}
+  users: [],
+  favorite: [],
+  load: false,
+};
 
+export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
+  try {
+    const res = await fetch("http://localhost:4000/users/user", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
-export const fetchUser = createAsyncThunk(
-    "fetch/user",
-    async (_,thunkAPI)=>{
-        try {
-            const res = await fetch("http://localhost:4000/users/user", {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${thunkAPI.getState().application.token}`,
-                  "Content-Type": "application/json",
-                },
-              });
-            const data = await res.json()
-            return data
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error)
-        }
+export const addToFavorite = createAsyncThunk(
+  "addFavorite/user",
+  async ({ id, movieId }, thunkAPI) => {
+    console.log(id, "123");
+    try {
+      const res = await fetch(`http://localhost:4000/users/addFav/${id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ movie: movieId }),
+      });
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
-)
-
- 
-
+  }
+);
 
 const userSclice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {},
-    extraReducers:(builder)=>{
-        builder
-        .addCase(fetchUser.fulfilled,(state,action)=>{
-            state.users = action.payload
-            state.load= false
-        })
-        .addCase(fetchUser.pending,(state,action)=>{
-            
-            state.load= true
-        })
-        
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.load = false;
+      })
+      .addCase(fetchUser.pending, (state, action) => {
+        state.load = true;
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        console.log(action.payload, "213");
+        state.favorite.unshift(action.payload.movie);
+      });
+  },
+});
 
-       
-    }
-})
-
-
-export default userSclice.reducer
+export default userSclice.reducer;
