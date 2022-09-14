@@ -26,3 +26,9 @@
   color: white;
   margin: 10px;
 }
+
+.favorite_select {
+    cursor: pointer;
+    color: rgb(255, 0, 0);
+    margin: 10px;
+  }

@@ -36,7 +36,7 @@ export const addToFavorite = createAsyncThunk(
         body: JSON.stringify({ movie: movieId }),
       });
       const data = await res.json();
-      console.log(data);
+      
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -58,8 +58,15 @@ const userSclice = createSlice({
         state.load = true;
       })
       .addCase(addToFavorite.fulfilled, (state, action) => {
-        console.log(action.payload, "213");
+       
         state.favorite.unshift(action.payload.movie);
+        state.users.map((item)=>{
+          if(item._id ===action.payload.user._id){
+            item.movies.push(action.payload.movie)
+
+          }
+         
+        })
       });
   },
 });
