@@ -3,14 +3,18 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchmovies } from "../features/movieSlice";
-import { filterMovies } from "../features/movieSlice";
 import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
 import { Link, useParams } from "react-router-dom";
 const MainPages = () => {
+  
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchmovies());
+    dispatch(fetchgenre());
+  }, []);
   const categories = ["ВСЕ", "Платные", "Бесплатные"];
   const years = [
     2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011,
@@ -23,10 +27,7 @@ const MainPages = () => {
   const [titleYears, settitleYears] = useState("Все года");
   const [titleCountry, settitleCountry] = useState("Все страны");
 
-  useEffect(() => {
-    dispatch(fetchmovies());
-    dispatch(fetchgenre());
-  }, [dispatch]);
+ 
 
   const genres = useSelector((state) => state.genres.genres);
   const movies = useSelector((state) => state.movies.movies);
@@ -52,8 +53,7 @@ const MainPages = () => {
     }
     return item.genre.includes(id) || item.year == id || item.country == id;
   });
-  console.log(id);
-
+ 
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>

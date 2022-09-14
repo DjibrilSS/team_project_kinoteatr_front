@@ -32,7 +32,7 @@ const Header = () => {
                        :
                        <ul className={styles.nav_link_exit}>
                         <li><Link onClick={handleExit} to="/">Выйти</Link></li>
-                        <li><Link to="/user">Личный кабинет</Link></li>
+                        <li><Link o to="/user">Личный кабинет</Link></li>
                        </ul>
                     }
                         
