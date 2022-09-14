@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite } from "../features/usersSlice";
 
 const Movie = ({ movie }) => {
+  
   const dispatch = useDispatch();
   const id = useSelector((state) => state.application.id);
+  const user = useSelector((state)=>state.users.users)
 
   const handleFavorite = (movieId) => {
     dispatch(addToFavorite({id, movieId}));
@@ -22,15 +24,12 @@ const Movie = ({ movie }) => {
       <div className={styles.movie_title}>
         <div>
           <h4>{movie.title}</h4>
-          <div onClick={()=>handleFavorite(movie._id)} className={styles.favorite}>
+          <div onClick={()=>handleFavorite(movie._id)} className={user[0].movies.find(i => i._id === movie._id) ? styles.favorite_select: styles.favorite}>
             ❤
           </div>
         </div>
-        <div className={styles.movie_inner}>
-          {movie.price == 0 ? "Бесплатно" : `${movie.price}`}
-        </div>
       </div>
-      <div className={styles.movie_inner}>Бесплатно</div>
+      <div className={styles.movie_inner}>{movie.price === 0 ? "Бесплатно" : `Платный`}</div>
     </div>
   );
 };

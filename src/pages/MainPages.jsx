@@ -6,40 +6,45 @@ import { fetchmovies } from "../features/movieSlice";
 import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { fetchUser } from "../features/usersSlice";
 const MainPages = () => {
-  
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
-  }, []);
+    dispatch(fetchUser())
+  }, [dispatch]);
   const categories = ["ВСЕ", "Платные", "Бесплатные"];
   const years = [
     2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011,
     2010, 2009,
   ];
   const country = ["Россия", "США", "Великобритания", "Франция", "Испания"];
-  const params = useParams();
-  const id = params.id;
+
+
   const [titleGenre, settitleGenre] = useState("Все жанры");
   const [titleYears, settitleYears] = useState("Все года");
   const [titleCountry, settitleCountry] = useState("Все страны");
-
- 
+  const [titleGenreid, settitleGenreid] = useState();
+  const [titleYearsid, settitleYearsid] = useState();
+  const [titleCountryid, settitleCountryid] = useState();
 
   const genres = useSelector((state) => state.genres.genres);
   const movies = useSelector((state) => state.movies.movies);
 
-  const handleClickGenre = (name) => {
+  const handleClickGenre = (name, id) => {
     settitleGenre(name);
+    settitleGenreid(id);
   };
   const handleClickYears = (name) => {
     settitleYears(name);
+    settitleYearsid(name);
   };
   const handleClickCountry = (name) => {
     settitleCountry(name);
+    settitleCountryid(name);
   };
 
   const onclickCategory = (index) => {
@@ -47,13 +52,38 @@ const MainPages = () => {
   };
 
   const filteredgenre = movies.filter((item) => {
-    console.log(item.year);
-    if (!id) {
+    if (!titleGenreid || titleGenreid === "Все жанры") {
       return true;
     }
-    return item.genre.includes(id) || item.year == id || item.country == id;
+    return item.genre.includes(titleGenreid);
   });
- 
+
+  const filterYears = filteredgenre.filter((item) => {
+    if (!titleYearsid || titleYearsid === "Все года") {
+      return true;
+    }
+    return item.year === titleYearsid;
+  });
+
+  const filterCountry = filterYears.filter((item) => {
+    if (!titleCountryid || titleCountryid === "Все страны") {
+      return true;
+    }
+    return item.country === titleCountryid;
+  });
+
+  const filterPaid = filterCountry.filter((item)=>{
+    if(active === 0){
+      return true
+    }
+    if(active === 2){
+      return item.price === 0
+    }
+    if(active === 1){
+      return item.price > 1
+    }
+  })
+
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -78,12 +108,20 @@ const MainPages = () => {
         <div className={styles.dropdown}>
           <button className={styles.dropbtn}>{titleGenre}</button>
           <ul className={styles.dropdown_content} name="Жанры">
+            <li>
+              <Link
+                to="/"
+                onClick={() => handleClickGenre("Все жанры", "Все жанры")}
+              >
+                Все жанры
+              </Link>
+            </li>
             {genres.map((genre) => {
               return (
                 <li>
                   <Link
-                    onClick={() => handleClickGenre(genre.nameGenre)}
-                    to={`/genre/${genre._id}`}
+                    onClick={() => handleClickGenre(genre.nameGenre, genre._id)}
+                    to={`/`}
                   >
                     {" "}
                     {genre.nameGenre}
@@ -96,10 +134,15 @@ const MainPages = () => {
         <div className={styles.dropdown}>
           <button className={styles.dropbtn}>{titleYears}</button>
           <ul className={styles.dropdown_content}>
+            <li>
+              <Link onClick={() => handleClickYears("Все года")} to={`/`}>
+                Все года
+              </Link>
+            </li>
             {years.map((i) => {
               return (
                 <li>
-                  <Link onClick={() => handleClickYears(i)} to={`/years/${i}`}>
+                  <Link onClick={() => handleClickYears(i)} to={`/`}>
                     {i}
                   </Link>
                 </li>
@@ -110,12 +153,17 @@ const MainPages = () => {
         <div className={styles.dropdown}>
           <button className={styles.dropbtn}>{titleCountry}</button>
           <ul className={styles.dropdown_content}>
+            <li>
+              <Link onClick={() => handleClickCountry("Все страны")} to="/">
+                Все страны
+              </Link>
+            </li>
             {country.map((i) => {
               return (
                 <li>
                   <Link
                     onClick={() => handleClickCountry(i)}
-                    to={`/country/${i}`}
+                    to={`/`}
                   >
                     {i}
                   </Link>
@@ -126,7 +174,7 @@ const MainPages = () => {
         </div>
       </div>
       <div className={styles.main_content}>
-        {filteredgenre.map((movie) => {
+        {filterPaid.map((movie) => {
           return <Movie movie={movie} />;
         })}
       </div>
