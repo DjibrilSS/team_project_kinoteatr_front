@@ -24,7 +24,21 @@
     padding: 4 0;
     height: 32px;
 }
-.categoryfilters_item div{
+.categoryActive{
+  background-color: transparent;
+    border-radius: 4px;
+    color: #1b1b1b;
+    font-weight: 700;
+    background-color: #939693;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 28px;
+    margin: 0 2px;
+    padding: 2px 16px;
+    white-space: nowrap;
+
+}
+.categorynoActive{
     
     background-color: transparent;
     border-radius: 4px;
@@ -45,8 +59,9 @@
     .dropbtn {
         background-color: #191b19;
         color: white;
-        padding: 16px;
-        font-size: 16px;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
         border: none;
       }
       
@@ -54,13 +69,14 @@
       .dropdown {
         position: relative;
         display: inline-block;
+        margin-left: 40px;
       }
       
       /* Выпадающее содержимое (скрыто по умолчанию) */
       .dropdown_content {
         display: none;
         position: absolute;
-        background-color: #f1f1f1;
+        background-color: #1b1b1b;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
@@ -68,7 +84,7 @@
       
       /* Ссылки внутри выпадающего списка */
       .dropdown_content a {
-        color: black;
+        color: rgb(243, 235, 235);
         padding: 12px 16px;
         text-decoration: none;
         display: block;
@@ -81,5 +97,5 @@
       .dropdown:hover .dropdown_content {display: block;}
       
       /* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
-      .dropdown:hover .dropbtn {background-color: #3e8e41;}
+      .dropdown:hover .dropbtn {background-color: #939693;}
       

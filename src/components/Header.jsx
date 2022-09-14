@@ -8,7 +8,7 @@ const Header = () => {
             <div className={styles.nav_menu}>
                 <div className={styles.header_logo}>
 
-                    <h1 >BOMBIBBO</h1>
+                    <Link to="/"><h1 >BOMBIBBO</h1></Link>
                 </div>
                 {/* <div className={styles.nav_link}>
                     <ul className={styles.nav_link_list}>
