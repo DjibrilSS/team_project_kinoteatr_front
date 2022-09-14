@@ -3,7 +3,6 @@
   height: 370px;
   margin: 40px;
   border-radius: 3px;
-
 }
 
 .movie_image img {
@@ -21,8 +20,7 @@
 }
 
 .favorite {
+  cursor: pointer;
   color: white;
   margin: 10px;
 }
-
-
