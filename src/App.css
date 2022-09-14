@@ -9,6 +9,7 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 .container{
-  width: 1200px;
+  
+  width: 90%;
   margin: auto;
 }
