@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    users: ''
+    users: [],
+    load:false
 }
 
 
@@ -27,19 +28,25 @@ export const fetchUser = createAsyncThunk(
  
 
 
-const moviesSclice = createSlice({
+const userSclice = createSlice({
     name: "user",
     initialState,
     reducers: {},
     extraReducers:(builder)=>{
         builder
         .addCase(fetchUser.fulfilled,(state,action)=>{
-            console.log(action.payload)
             state.users = action.payload
+            state.load= false
         })
+        .addCase(fetchUser.pending,(state,action)=>{
+            
+            state.load= true
+        })
+        
+
        
     }
 })
 
 
-export default moviesSclice.reducer
+export default userSclice.reducer

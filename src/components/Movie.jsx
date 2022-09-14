@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./styles/movie.module.css";
 import { Link } from "react-router-dom";
+
 const Movie = ({ movie }) => {
   return (
     <Link to={`/movie/${movie._id}`}>
@@ -11,7 +12,7 @@ const Movie = ({ movie }) => {
         <div className={styles.movie_title}>
           <h4>{movie.title}</h4>
         </div>
-        <div className={styles.movie_inner}>Бесплатно</div>
+        <div className={styles.movie_inner}>{movie.price == 0 ? "Бесплатно" : `${movie.price}`}</div>
       </div>
     </Link>
   );

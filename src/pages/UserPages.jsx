@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { fetchUser } from "../features/usersSlice";
 import styles from '../components/styles/userPages.module.css'
 const UserPages = () => {
-  
+  const id = useSelector((state)=> state.application.id)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
@@ -13,13 +13,20 @@ const UserPages = () => {
 
   const user = useSelector((state) => state.users.users);
 
-
+console.log(user)
   return (
   
- <div>  
-     <div>{user.login}</div>
-    <div>{user.wallet}</div>
-    <div>{user.movies.length ? user.movies.map(item => <div>{item}</div>) : <p>Нет купленных фильмов</p>}</div>
+ <div>
+  
+     {user.map((item)=>{
+      if(item._id === id){
+        return <div>{item.movies.map((i)=>{
+          return <div>{i.title}</div>
+        })}</div>
+      }
+     })}
+    
+        
  </div>
  
 
