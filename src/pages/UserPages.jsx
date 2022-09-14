@@ -19,9 +19,10 @@ const UserPages = () => {
  <div>  
      <div>{user.login}</div>
     <div>{user.wallet}</div>
-    <div>{user.movies.length ? user.movies.map(item => <div>{item}</div>) : <p>Нет фильмов</p>}</div>
+    <div>{user.movies.length ? user.movies.map(item => <div>{item}</div>) : <p>Нет купленных фильмов</p>}</div>
  </div>
  
+
   )
 };
 
