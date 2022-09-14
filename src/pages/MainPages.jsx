@@ -90,7 +90,6 @@ settitleGenre(name)
             })}
           </ul>
         </div>
-      
         
       </div>
       <div className={styles.main_content}>

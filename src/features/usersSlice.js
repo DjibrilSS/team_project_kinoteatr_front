@@ -1,16 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    users: ''
+    users: '',
+    favorite: []
 }
 
 
 export const fetchUser = createAsyncThunk(
     "fetch/user",
-    async (_,thunkAPI)=>{
+    async ({ movieId },thunkAPI)=>{
         try {
-            const res = await fetch("http://localhost:4000/users/user", {
-                method: "GET",
+            console.log(movieId);
+            const res = await fetch(`http://localhost:4000/users/addFav/${movieId}`, {
+                method: "PATCH",
                 headers: {
                   Authorization: `Bearer ${thunkAPI.getState().application.token}`,
                   "Content-Type": "application/json",
@@ -22,7 +24,15 @@ export const fetchUser = createAsyncThunk(
             return thunkAPI.rejectWithValue(error)
         }
     }
-)
+);
+
+export const addToFavorite = createAsyncThunk('addFavorite/user', async (_, thunkAPI) => {
+    try {
+        const res = await fetch('"http://localhost:4000/users/user"')
+    } catch (error) {
+        
+    }
+})
 
  
 
