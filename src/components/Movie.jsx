@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
 
 const Movie = ({ movie }) => {
-
+const token = useSelector((state)=> state.application.token)
 
   const dispatch = useDispatch();
   const id = useSelector((state) => state.application.id);
@@ -42,16 +42,16 @@ const notifydelete = () => toast("Фильм удален!", {
         <div className={styles.movie_title}>
           <div>
             <h4>{movie.title}</h4>
-            <div
+           {token ?  <div
               onClick={() => handleFavorite(movie._id)}
               className={
-                user[0].movies.find((i) => i._id === movie._id)
-                  ? styles.favorite_select
-                  : styles.favorite
+                token ?user[0].movies.find((i) => i._id === movie._id)
+                ? styles.favorite_select
+                : styles.favorite : styles.favorite
               }
             >
               ❤
-            </div>
+            </div> : null}
           </div>
         </div>
         <div className={styles.movie_inner}>
