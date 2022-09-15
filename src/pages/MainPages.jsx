@@ -31,7 +31,6 @@ const MainPages = () => {
   const [titleGenreid, settitleGenreid] = useState();
   const [titleYearsid, settitleYearsid] = useState();
   const [titleCountryid, settitleCountryid] = useState();
-  
 
   const genres = useSelector((state) => state.genres.genres);
   const movies = useSelector((state) => state.movies.movies);
@@ -57,7 +56,7 @@ const MainPages = () => {
     if (!titleGenreid || titleGenreid === "Все жанры") {
       return true;
     }
-    return item.genre.find(i=> i._id === titleGenreid);
+    return item.genre.find((i) => i._id === titleGenreid);
   });
 
   const filterYears = filteredgenre.filter((item) => {
@@ -89,7 +88,7 @@ const MainPages = () => {
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
-        <h2>Все фильмы</h2>
+        <h2>ВСЕ ФИЛЬМЫ</h2>
       </div>
       <div className={styles.categoryfilters}>
         <div className={styles.categoryfilters_item}>
@@ -107,89 +106,92 @@ const MainPages = () => {
             );
           })}
         </div>
-        <div className={styles.dropdown}>
-          <button className={styles.dropbtn}>{titleGenre}</button>
-          <ul className={styles.dropdown_content} name="Жанры">
-            <li>
-              <Link
-                to="/"
-                onClick={() => handleClickGenre("Все жанры", "Все жанры")}
-              >
-                Все жанры
-              </Link>
-            </li>
-            {genres.map((genre) => {
-              return (
-                <li>
-                  <Link
-                    onClick={() => handleClickGenre(genre.nameGenre, genre._id)}
-                    to={`/`}
-                  >
-                    {" "}
-                    {genre.nameGenre}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className={styles.dropdown}>
-          <button className={styles.dropbtn}>{titleYears}</button>
-          <ul className={styles.dropdown_content}>
-            <li>
-              <Link onClick={() => handleClickYears("Все года")} to={`/`}>
-                Все года
-              </Link>
-            </li>
-            {years.map((i) => {
-              return (
-                <li>
-                  <Link onClick={() => handleClickYears(i)} to={`/`}>
-                    {i}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-       
-        <div className={styles.dropdown}>
-          <button className={styles.dropbtn}>{titleCountry}</button>
-          <ul className={styles.dropdown_content}>
-            <li>
-              <Link onClick={() => handleClickCountry("Все страны")} to="/">
-                Все страны
-              </Link>
-            </li>
-            {country.map((i) => {
-              return (
-                <li>
-                  <Link onClick={() => handleClickCountry(i)} to={`/`}>
-                    {i}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+        <div>
+          {" "}
+          <div className={styles.dropdown}>
+            <button className={styles.dropbtn}>{titleGenre}</button>
+            <ul className={styles.dropdown_content} name="Жанры">
+              <li>
+                <Link
+                  to="/"
+                  onClick={() => handleClickGenre("Все жанры", "Все жанры")}
+                >
+                  Все жанры
+                </Link>
+              </li>
+              {genres.map((genre) => {
+                return (
+                  <li>
+                    <Link
+                      onClick={() =>
+                        handleClickGenre(genre.nameGenre, genre._id)
+                      }
+                      to={`/`}
+                    >
+                      {" "}
+                      {genre.nameGenre}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className={styles.dropdown}>
+            <button className={styles.dropbtn}>{titleYears}</button>
+            <ul className={styles.dropdown_content}>
+              <li>
+                <Link onClick={() => handleClickYears("Все года")} to={`/`}>
+                  Все года
+                </Link>
+              </li>
+              {years.map((i) => {
+                return (
+                  <li>
+                    <Link onClick={() => handleClickYears(i)} to={`/`}>
+                      {i}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className={styles.dropdown}>
+            <button className={styles.dropbtn}>{titleCountry}</button>
+            <ul className={styles.dropdown_content}>
+              <li>
+                <Link onClick={() => handleClickCountry("Все страны")} to="/">
+                  Все страны
+                </Link>
+              </li>
+              {country.map((i) => {
+                return (
+                  <li>
+                    <Link onClick={() => handleClickCountry(i)} to={`/`}>
+                      {i}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
       <div className={styles.main_content}>
         {load ? (
           <div class={styles.wrapper}>
-          <div class={styles.circle}></div>
-          <div class={styles.circle}></div>
-          <div class={styles.circle}></div>
-          <div class={styles.shadow}></div>
-          <div class={styles.shadow}></div>
-          <div class={styles.shadow}></div>
-      </div>
+            <div class={styles.circle}></div>
+            <div class={styles.circle}></div>
+            <div class={styles.circle}></div>
+            <div class={styles.shadow}></div>
+            <div class={styles.shadow}></div>
+            <div class={styles.shadow}></div>
+          </div>
         ) : (
           filterPaid.map((movie) => {
             return <Movie movie={movie} />;
           })
         )}
       </div>
-     
     </div>
   );
 };
