@@ -25,7 +25,7 @@ export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
 export const addToFavorite = createAsyncThunk(
   "addFavorite/user",
   async ({ id, movieId }, thunkAPI) => {
-    console.log(id, "123");
+  
     try {
       const res = await fetch(`http://localhost:4000/users/addFav/${id}`, {
         method: "PATCH",
@@ -41,7 +41,29 @@ export const addToFavorite = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  })
+
+
+  export const removeFavorite = createAsyncThunk(
+    "removeFavorite/user",
+    async ({ id, movieId }, thunkAPI) => {
+    
+      try {
+        const res = await fetch(`http://localhost:4000/users/removeFav/${id}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ movie: movieId }),
+        });
+        const data = await res.json();
+        
+        return data;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
 );
 
 const userSclice = createSlice({
@@ -56,6 +78,19 @@ const userSclice = createSlice({
       })
       .addCase(fetchUser.pending, (state, action) => {
         state.load = true;
+      })
+
+      .addCase(removeFavorite.fulfilled,(state,action)=>{
+        state.users = state.users.map((item)=>{
+          if(item._id ===action.payload.user._id){
+            return{
+              ...item,
+              movies: item.movies.filter((i)=>{
+                return i._id !== action.payload.movie._id
+              })
+            }
+          }
+        })
       })
       .addCase(addToFavorite.fulfilled, (state, action) => {
        

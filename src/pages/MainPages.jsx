@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+
 import { fetchmovies } from "../features/movieSlice";
 import { fetchgenre } from "../features/genreSclice";
 import Movie from "../components/Movie";
@@ -9,12 +10,13 @@ import styles from "../components/styles/main.module.css";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../features/usersSlice";
 const MainPages = () => {
+  const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
-    dispatch(fetchUser())
+    dispatch(fetchUser());
   }, [dispatch]);
   const categories = ["ВСЕ", "Платные", "Бесплатные"];
   const years = [
@@ -23,13 +25,13 @@ const MainPages = () => {
   ];
   const country = ["Россия", "США", "Великобритания", "Франция", "Испания"];
 
-
   const [titleGenre, settitleGenre] = useState("Все жанры");
   const [titleYears, settitleYears] = useState("Все года");
   const [titleCountry, settitleCountry] = useState("Все страны");
   const [titleGenreid, settitleGenreid] = useState();
   const [titleYearsid, settitleYearsid] = useState();
   const [titleCountryid, settitleCountryid] = useState();
+  
 
   const genres = useSelector((state) => state.genres.genres);
   const movies = useSelector((state) => state.movies.movies);
@@ -55,7 +57,7 @@ const MainPages = () => {
     if (!titleGenreid || titleGenreid === "Все жанры") {
       return true;
     }
-    return item.genre.includes(titleGenreid);
+    return item.genre.find(i=> i._id === titleGenreid);
   });
 
   const filterYears = filteredgenre.filter((item) => {
@@ -72,17 +74,17 @@ const MainPages = () => {
     return item.country === titleCountryid;
   });
 
-  const filterPaid = filterCountry.filter((item)=>{
-    if(active === 0){
-      return true
+  const filterPaid = filterCountry.filter((item) => {
+    if (active === 0) {
+      return true;
     }
-    if(active === 2){
-      return item.price === 0
+    if (active === 2) {
+      return item.price === 0;
     }
-    if(active === 1){
-      return item.price > 1
+    if (active === 1) {
+      return item.price > 1;
     }
-  })
+  });
 
   return (
     <div className={styles.main}>
@@ -150,6 +152,7 @@ const MainPages = () => {
             })}
           </ul>
         </div>
+       
         <div className={styles.dropdown}>
           <button className={styles.dropbtn}>{titleCountry}</button>
           <ul className={styles.dropdown_content}>
@@ -161,10 +164,7 @@ const MainPages = () => {
             {country.map((i) => {
               return (
                 <li>
-                  <Link
-                    onClick={() => handleClickCountry(i)}
-                    to={`/`}
-                  >
+                  <Link onClick={() => handleClickCountry(i)} to={`/`}>
                     {i}
                   </Link>
                 </li>
@@ -174,10 +174,22 @@ const MainPages = () => {
         </div>
       </div>
       <div className={styles.main_content}>
-        {filterPaid.map((movie) => {
-          return <Movie movie={movie} />;
-        })}
+        {load ? (
+          <div class={styles.wrapper}>
+          <div class={styles.circle}></div>
+          <div class={styles.circle}></div>
+          <div class={styles.circle}></div>
+          <div class={styles.shadow}></div>
+          <div class={styles.shadow}></div>
+          <div class={styles.shadow}></div>
       </div>
+        ) : (
+          filterPaid.map((movie) => {
+            return <Movie movie={movie} />;
+          })
+        )}
+      </div>
+     
     </div>
   );
 };
