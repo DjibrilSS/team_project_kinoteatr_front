@@ -38,7 +38,7 @@ function App() {
           <Route path="/" element={<MainPages />} />
           <Route path="/login" element={<SingIn />} />
           <Route path="/auth" element={<SingUp />} />
-
+          <Route path="/movie/:id" element={<MoviePage />} />
         </Routes>
       </div>
     )
