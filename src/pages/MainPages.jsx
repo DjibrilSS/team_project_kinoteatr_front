@@ -13,6 +13,7 @@ const MainPages = () => {
   const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());

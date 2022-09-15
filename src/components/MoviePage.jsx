@@ -3,13 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies } from "../features/movieSlice";
+import Alert from "@mui/material/Alert";
+import { buymovies, fetchUser } from "../features/usersSlice";
 
 const MoviePage = () => {
   const dispatch = useDispatch();
+  const userid = useSelector((state)=> state.application.id)
+  
   const { id } = useParams();
+  const user = useSelector((state) => state.users.users);
   useEffect(() => {
     dispatch(fetchmovies());
+    dispatch(fetchUser());
   }, [dispatch]);
+  const handlebuy = (movieId) => {
+    dispatch(buymovies({userid,movieId}));
+  };
 
   const movies = useSelector((state) => state.movies.movies);
 
@@ -21,15 +30,24 @@ const MoviePage = () => {
             <div className={styles.movie_page}>
               <h1>{item.title}</h1>
               <div className={styles.treiler}>
-                <iframe
-                  width="90%"
-                  height="500px"
-                  src="https://www.youtube.com/embed/0zTYJYn23sA"
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
+                {user[0].movies.find((i) => i._id === item._id) ? (
+                  <iframe
+                    width="90%"
+                    height="500px"
+                    src="https://www.youtube.com/embed/0zTYJYn23sA"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                ) : (
+                  <div className={styles.alert}>
+                    <Alert variant="filled" severity="error">
+                      Фильм доступен только после оплаты!
+                    </Alert>
+                    <button onClick={()=> handlebuy(item._id)} className={styles.buy_btn}>Купить</button>
+                  </div>
+                )}
               </div>
               <div className={styles.movie_info}>
                 <div className={styles.image}>
