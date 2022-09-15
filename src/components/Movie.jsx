@@ -40,12 +40,13 @@ const notifydelete = () => toast("Фильм удален!", {
           </div>
         </Link>
         <div className={styles.movie_title}>
+          
           <div>
             <h4>{movie.title}</h4>
            {token ?  <div
               onClick={() => handleFavorite(movie._id)}
               className={
-                token ?user[0].movies.find((i) => i._id === movie._id)
+                token ? user[0].movies.find((i) => i._id === movie._id)
                 ? styles.favorite_select
                 : styles.favorite : styles.favorite
               }
