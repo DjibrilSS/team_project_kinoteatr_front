@@ -5,6 +5,13 @@
     padding: 40px;
     margin-top: 60px;
     border-radius: 10px;
+}
+.favorite_content{
     display: flex;
     flex-wrap: wrap;
+}
+.favorite_title{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }

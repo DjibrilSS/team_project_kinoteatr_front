@@ -122,7 +122,7 @@ const userSclice = createSlice({
       .addCase(buymovies.fulfilled, (state, action) => {
         state.users.map((item) => {
           if (item._id === action.payload.user._id) {
-            item.movies.push(action.payload.movie);
+            item.buymovies.push(action.payload.movie);
           }
         });
       });

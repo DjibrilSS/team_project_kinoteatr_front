@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
 
-const Movie = ({ movie }) => {
+const Movie = ({ movie,i }) => {
   const token = useSelector((state) => state.application.token);
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Movie = ({ movie }) => {
   };
 
   return (
-    <div className={styles.movie_card}>
+    <div key={i} className={styles.movie_card}>
       <div className={styles.movie_card_content}>
         <Link to={`/movie/${movie._id}`}>
           <div className={styles.movie_image}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import avatar from "./dSxCxs3Vgzk.jpg"
 import { Avatar } from "@mui/material";
 import FavoritePages from "./FavoritePages";
+import { useParams } from "react-router-dom";
 const UserPages = () => {
-  const id = useSelector((state) => state.application.id);
+  const [active,setActive]= useState()
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
@@ -34,17 +35,15 @@ const UserPages = () => {
             </div>
 
             <div className={styles.user_nav}>
-              <div className={styles.user_nav_item}>
-                <Link to="/favorites">Избранное</Link>
+              <div onClick={()=> setActive("Избранное")} className={styles.user_nav_item}>
+                <button className={styles.lk_btn}><b>Избранное</b></button>
               </div>
-              <div className={styles.user_nav_item}>
-                <Link to="/subscribe">Купленные</Link>
+              <div onClick={()=> setActive("Купленные")} className={styles.user_nav_item}>
+              <button className={styles.lk_btn}><b>Купленные</b></button>
               </div>
-              <div className={styles.user_nav_item}>
-                <Link to="/settings">Настройки</Link>
-              </div>
+              
             </div>
-            <FavoritePages films = {item.movies} />
+            <FavoritePages title = {active} films = {active === "Избранное" ? item.movies : item.buymovies} />
           </>
         );
       })}
