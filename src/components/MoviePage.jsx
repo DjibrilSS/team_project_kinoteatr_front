@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies } from "../features/movieSlice";
@@ -7,7 +8,9 @@ import Alert from "@mui/material/Alert";
 import { buymovies, fetchUser } from "../features/usersSlice";
 
 const MoviePage = () => {
+ 
   const dispatch = useDispatch();
+  const error = useSelector((state)=> state.users.error)
   const userid = useSelector((state)=> state.application.id)
   const load = useSelector((state)=> state.users.load)
   const { id } = useParams();
@@ -16,7 +19,14 @@ const MoviePage = () => {
     dispatch(fetchmovies());
     dispatch(fetchUser());
   }, [dispatch]);
+  const notify = () =>
+  toast("Вы должны сперва авторизироваться", {
+    type: "error",
+  });
   const handlebuy = (movieId) => {
+    if(error){
+      return notify()
+    }
     dispatch(buymovies({userid,movieId}));
   };
 
@@ -38,7 +48,7 @@ const MoviePage = () => {
                 <div className={styles.movie_page}>
                   <h1>{item.title}</h1>
                   <div className={styles.treiler}>
-                    {user[0].buymovies.find((i) => i._id === item._id) ? (
+                    {item.price < 1 ? (
                       <iframe
                         width="90%"
                         height="500px"
@@ -90,6 +100,7 @@ const MoviePage = () => {
                     </div>
                   </div>
                   <p className={styles.description}>{item.description}</p>
+                  <ToastContainer />
                 </div>
               );
             }

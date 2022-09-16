@@ -4,6 +4,7 @@ const initialState = {
   users: [],
   favorite: [],
   load: false,
+  error:null
 };
 
 export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
@@ -16,6 +17,9 @@ export const fetchUser = createAsyncThunk("fetch/user", async (_, thunkAPI) => {
       },
     });
     const data = await res.json();
+    if(data.error){
+      return thunkAPI.rejectWithValue(data.error)
+  }
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -91,6 +95,11 @@ const userSclice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(fetchUser.rejected, (state, action) => {
+      state.error = action.payload
+      state.load = false
+      
+    })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.users = action.payload;
         state.load = false;
@@ -112,7 +121,7 @@ const userSclice = createSlice({
         });
       })
       .addCase(addToFavorite.fulfilled, (state, action) => {
-        state.favorite.unshift(action.payload.movie);
+       
         state.users.map((item) => {
           if (item._id === action.payload.user._id) {
             item.movies.push(action.payload.movie);

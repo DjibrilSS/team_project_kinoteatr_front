@@ -8,7 +8,7 @@ import { addToFavorite, removeFavorite } from "../features/usersSlice";
 
 const Movie = ({ movie,i }) => {
   const token = useSelector((state) => state.application.token);
-
+  const error = useSelector((state)=> state.users.error)
   const dispatch = useDispatch();
   const id = useSelector((state) => state.application.id);
   const user = useSelector((state) => state.users.users);
@@ -42,20 +42,20 @@ const Movie = ({ movie,i }) => {
         <div className={styles.movie_info}>
           <div className={styles.movie_title}>
             <h4>{movie.title}</h4>
-            {token ? (
-              <div
-                onClick={() => handleFavorite(movie._id)}
-                className={
-                  token
-                    ? user[0].movies.find((i) => i._id === movie._id)
-                      ? styles.favorite_select
-                      : styles.favorite
-                    : styles.favorite
-                }
-              >
-                ❤
-              </div>
-            ) : null}
+            {error ? (
+              null
+            ) : <div
+            onClick={() => handleFavorite(movie._id)}
+            className={
+              error
+                ? user[0].movies.find((i) => i._id === movie._id)
+                  ? styles.favorite_select
+                  : styles.favorite
+                : styles.favorite
+            }
+          >
+            ❤
+          </div>}
           </div>
           <div className={styles.movie_inner}>
           {movie.price === 0 ? "Бесплатно" : `Платный`}

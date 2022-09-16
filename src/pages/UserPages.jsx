@@ -10,7 +10,7 @@ import { Avatar } from "@mui/material";
 import FavoritePages from "./FavoritePages";
 import { useParams } from "react-router-dom";
 const UserPages = () => {
-  const [active,setActive]= useState()
+  const [active,setActive]= useState("Избранное")
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
