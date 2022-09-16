@@ -10,9 +10,11 @@ import styles from "../components/styles/main.module.css";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../features/usersSlice";
 const MainPages = () => {
+  const [value,setvalue] = useState("")
   const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
@@ -51,8 +53,11 @@ const MainPages = () => {
   const onclickCategory = (index) => {
     setActive(index);
   };
+  const filterinput = movies.filter((item)=>{
+    return item.title.toLowerCase().includes(value.toLowerCase().toString())
+  })
 
-  const filteredgenre = movies.filter((item) => {
+  const filteredgenre = filterinput.filter((item) => {
     if (!titleGenreid || titleGenreid === "Все жанры") {
       return true;
     }
@@ -85,6 +90,7 @@ const MainPages = () => {
     }
   });
 
+
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -106,6 +112,7 @@ const MainPages = () => {
             );
           })}
         </div>
+       
         <div>
           {" "}
           <div className={styles.dropdown}>
@@ -175,20 +182,23 @@ const MainPages = () => {
             </ul>
           </div>
         </div>
+        <div class="textInputWrapper">
+          <input value = {value} onChange= {(e)=> setvalue(e.target.value)} placeholder="Type Here" type="text" class="textInput" />
+        </div>
       </div>
       <div className={styles.main_content}>
         {load ? (
-          <div class={styles.wrapper}>
-            <div class={styles.circle}></div>
-            <div class={styles.circle}></div>
-            <div class={styles.circle}></div>
-            <div class={styles.shadow}></div>
-            <div class={styles.shadow}></div>
-            <div class={styles.shadow}></div>
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
           </div>
         ) : (
-          filterPaid.map((movie) => {
-            return <Movie movie={movie} />;
+          filterPaid.map((movie,i) => {
+            return <Movie i={i} movie={movie} />;
           })
         )}
       </div>

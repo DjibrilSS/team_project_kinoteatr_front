@@ -24,6 +24,7 @@ function App() {
           <Route path="/login" element={<Navigate to="/"/>} />
           <Route path="/auth" element={<Navigate to="/"/>} />
           <Route path="/user" element={<UserPages />} />
+          <Route path="/user/:id" element={<UserPages />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/subscribe" element={<UserPages />} />
         </Routes>
