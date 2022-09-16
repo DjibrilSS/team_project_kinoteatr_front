@@ -3,8 +3,43 @@ import { createAction } from "@reduxjs/toolkit";
 const initialState = {
   movies: [],
   moviesFilter: [],
-  load:false
+  load: false,
+  comments: [],
 };
+
+export const fetchComments = createAsyncThunk(
+  "fetch/comments",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("http://localhost:4000/commit");
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk(
+  "post/comment",
+  async ({ comment, id, user }, thunkAPI) => {
+    try {
+      const res = await fetch("http://localhost:4000/commit", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comment, movie: id, user }),
+      });
+      const data = await res.json();
+      console.log(data, "=====");
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const fetchmovies = createAsyncThunk(
   "fetch/movies",
@@ -24,25 +59,30 @@ const moviesSclice = createSlice({
   initialState,
   reducers: {
     filterMovies: (state, action) => {
-      state.moviesFilter = state.movies.filter((item) => {
-       console.log(action.payload)
-      });
+      state.moviesFilter = state.movies.filter((item) => {});
     },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchmovies.fulfilled, (state, action) => {
-      state.movies = action.payload;
-      state.load = false
-      if (state.moviesFilter.length < 1) {
-        state.moviesFilter = action.payload;
-      }
-    })
-    .addCase(fetchmovies.pending,(state,action)=>{
-      state.load = true
-    })
+      .addCase(fetchmovies.fulfilled, (state, action) => {
+        state.movies = action.payload;
+        state.load = false;
+        if (state.moviesFilter.length < 1) {
+          state.moviesFilter = action.payload;
+        }
+      })
+      .addCase(fetchmovies.pending, (state, action) => {
+        state.load = true;
+      })
+      .addCase(fetchComments.fulfilled, (state, action) => {
+        state.comments = action.payload;
+        state.load = false;
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        state.comments.push(action.payload)
+        state.load = false;
+      })
   },
-  
 });
 export const { filterMovies } = moviesSclice.actions;
 

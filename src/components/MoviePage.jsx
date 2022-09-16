@@ -6,13 +6,17 @@ import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies } from "../features/movieSlice";
 import Alert from "@mui/material/Alert";
 import { buymovies, fetchUser } from "../features/usersSlice";
-
+import Comments from "./Comments";
 const MoviePage = () => {
  
   const dispatch = useDispatch();
+
   const error = useSelector((state)=> state.users.error)
   const userid = useSelector((state)=> state.application.id)
   const load = useSelector((state)=> state.users.load)
+
+  
+
   const { id } = useParams();
   const user = useSelector((state) => state.users.users);
   useEffect(() => {
@@ -24,35 +28,39 @@ const MoviePage = () => {
     type: "error",
   });
   const handlebuy = (movieId) => {
+ 
     if(error){
       return notify()
     }
     dispatch(buymovies({userid,movieId}));
-  };
+
 
   const movies = useSelector((state) => state.movies.movies);
 
   return (
     <>
-    {load? <div class="wrapper">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-          </div>
-          :  movies.map((item) => {
-            if (id === item._id) {
-              return (
-                <div className={styles.movie_page}>
+      {load ? (
+        <div class="wrapper">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+        </div>
+      ) : (
+        movies.map((item) => {
+          if (id === item._id) {
+            return (
+              <>
+                <div key={item._id} className={styles.movie_page}>
                   <h1>{item.title}</h1>
                   <div className={styles.treiler}>
                     {item.price < 1 ? (
                       <iframe
                         width="90%"
                         height="500px"
-                        src="https://www.youtube.com/embed/0zTYJYn23sA"
+                        src="https://www.youtube.com/embed/eIqjPDpE-_c"
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -63,7 +71,12 @@ const MoviePage = () => {
                         <Alert variant="filled" severity="error">
                           Фильм доступен только после оплаты!
                         </Alert>
-                        <button onClick={()=> handlebuy(item._id)} className={styles.buy_btn}>Купить</button>
+                        <button
+                          onClick={() => handlebuy(item._id)}
+                          className={styles.buy_btn}
+                        >
+                          Купить
+                        </button>
                       </div>
                     )}
                   </div>
@@ -102,12 +115,15 @@ const MoviePage = () => {
                   <p className={styles.description}>{item.description}</p>
                   <ToastContainer />
                 </div>
-              );
-            }
-            return null;
-          })}
-          
-     
+                <hr />
+                <Comments />
+                <hr />
+              </>
+            );
+          }
+          return null;
+        })
+      )}
     </>
   );
 };
