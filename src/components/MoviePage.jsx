@@ -15,8 +15,6 @@ const MoviePage = () => {
   const userid = useSelector((state)=> state.application.id)
   const load = useSelector((state)=> state.users.load)
 
-  
-
   const { id } = useParams();
   const user = useSelector((state) => state.users.users);
   useEffect(() => {
@@ -28,12 +26,13 @@ const MoviePage = () => {
     type: "error",
   });
   const handlebuy = (movieId) => {
- 
+
     if(error){
       return notify()
     }
     dispatch(buymovies({userid,movieId}));
 
+  };
 
   const movies = useSelector((state) => state.movies.movies);
 
