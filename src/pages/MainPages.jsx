@@ -18,7 +18,7 @@ const MainPages = () => {
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
-    dispatch(fetchUser());
+    
   }, [dispatch]);
   const categories = ["ВСЕ", "Платные", "Бесплатные"];
   const years = [
