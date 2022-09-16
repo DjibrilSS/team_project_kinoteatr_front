@@ -41,24 +41,7 @@
   padding: 10px;
 }
 
-.comments_list {
-  background-color: grey;
-  width: 80%;
-  margin: auto;
-}
-
-.one_comment {
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  min-height: 60px;
-}
-
-.comment_login {
-  margin-right: 20px;
-  margin-bottom: 30px;
-}
-.alert{
+.alert {
   display: flex;
 }
 
@@ -66,23 +49,29 @@
   position: relative;
   font-size: 1.2em;
   padding: 0.6em 1.4em;
-  background-color: #BF0426;
+  background-color: #bf0426;
   text-decoration: none;
   border: none;
- margin-left: 20px;
+  margin-left: 20px;
   border-radius: 0.5em;
-  color: #DEDEDE;
+  color: #dedede;
   box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.3);
 }
 
 .buy_btn::before {
   position: absolute;
-  content: '';
+  content: "";
   height: 0;
   width: 0;
   top: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(33,33,33,1) 0%, rgba(33,33,33,1) 50%, rgba(150,4,31,1) 50%, rgba(191,4,38,1) 60%);
+  background: linear-gradient(
+    135deg,
+    rgba(33, 33, 33, 1) 0%,
+    rgba(33, 33, 33, 1) 50%,
+    rgba(150, 4, 31, 1) 50%,
+    rgba(191, 4, 38, 1) 60%
+  );
   border-radius: 0 0 0.5em 0;
   box-shadow: 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.3);
   transition: 0.3s;
@@ -96,4 +85,70 @@
 .buy_btn:active {
   box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
   transform: translate(0.1em, 0.1em);
+}
+
+/*= = = = = = = = Comments= = = = = = = = = = */
+
+.comments_list {
+  width: 80%;
+  margin: 30px auto;
+  border-radius: 10px;
+}
+
+.one_comment {
+  background-color: #1f1b2e;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  min-height: 60px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.comment_login {
+  margin-bottom: 10px;
+  color: #facc6d;
+}
+
+h2 {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.textarea_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+textarea {
+  width: 70%;
+  font-size: 18px;
+  padding: 5px;
+  outline-color: #ea003d;
+}
+
+.textarea_div button {
+  min-width: 100px;
+  padding: 8px 15px;
+  height: 50px;
+  font-size: 18px;
+  background-color: #ea003d;
+  color: white;
+  border-radius: 10px;
+}
+
+.textarea_div button:hover {
+  background-color: #f4275e;
+}
+
+.textarea_div button:active {
+  transform: scale(0.9);
+  transition: 0.2s;
+}
+
+hr {
+  margin: 20px 0;
 }
