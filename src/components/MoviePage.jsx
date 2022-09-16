@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies } from "../features/movieSlice";
-
+import Comment from "./Comment";
 const MoviePage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -64,11 +64,13 @@ const MoviePage = () => {
                 </div>
               </div>
               <p className={styles.description}>{item.description}</p>
+              <Comment/>
             </div>
           );
         }
         return null;
       })}
+ 
     </>
   );
 };
