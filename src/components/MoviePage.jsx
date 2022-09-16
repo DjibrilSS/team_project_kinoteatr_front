@@ -5,7 +5,7 @@ import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies } from "../features/movieSlice";
 import Alert from "@mui/material/Alert";
 import { buymovies, fetchUser } from "../features/usersSlice";
-
+import Comment from "./Comment";
 const MoviePage = () => {
   const dispatch = useDispatch();
   const userid = useSelector((state)=> state.application.id)
@@ -34,7 +34,7 @@ const MoviePage = () => {
           </div>
           :  movies.map((item) => {
             if (id === item._id) {
-              return (
+              return ( <>
                 <div className={styles.movie_page}>
                   <h1>{item.title}</h1>
                   <div className={styles.treiler}>
@@ -91,12 +91,12 @@ const MoviePage = () => {
                   </div>
                   <p className={styles.description}>{item.description}</p>
                 </div>
+                <Comment/>
+               </>
               );
             }
             return null;
           })}
-          
-     
     </>
   );
 };
