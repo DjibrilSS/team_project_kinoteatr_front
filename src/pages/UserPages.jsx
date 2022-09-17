@@ -7,8 +7,10 @@ import styles from "../components/styles/userPages.module.css";
 import { Link } from "react-router-dom";
 import avatar from "./dSxCxs3Vgzk.jpg"
 import { Avatar } from "@mui/material";
+import { Outlet } from "react-router-dom";
 import FavoritePages from "./FavoritePages";
-import { useParams } from "react-router-dom";
+
+import BuyMoviePage from "./BuyMoviePage";
 const UserPages = () => {
   const [active,setActive]= useState("Избранное")
   const dispatch = useDispatch();
@@ -43,7 +45,12 @@ const UserPages = () => {
               </div>
               
             </div>
-            <FavoritePages title = {active} films = {active === "Избранное" ? item.movies : item.buymovies} />
+         
+              <div>
+              <Outlet />
+                </div>
+               
+            {/* <FavoritePages title = {active} films = {active === "Избранное" ? item.movies : item.buymovies} /> */}
           </>
         );
       })}
