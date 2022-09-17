@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
 import { fetchmovies,buymovies } from "../features/movieSlice";
 import Alert from "@mui/material/Alert";
-import { fetchUser } from "../features/usersSlice";
+
 import Comments from "./Comments";
+
 const MoviePage = () => {
  
   const dispatch = useDispatch();
@@ -15,16 +16,13 @@ const MoviePage = () => {
   const userid = useSelector((state)=> state.application.id)
   const load = useSelector((state)=> state.users.load)
   const load2 = useSelector((state)=> state.movies.movies)
-  const [active,setactive] = useState(false)
+
   
 
   const { id } = useParams();
-  const user = useSelector((state) => state.users.users);
+
   useEffect(() => {
     dispatch(fetchmovies());
-   if(token){
-    dispatch(fetchUser())
-   } 
   }, [dispatch]);
   const notify = () =>
   toast("Вы должны сперва авторизироваться", {

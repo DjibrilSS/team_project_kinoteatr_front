@@ -67,6 +67,26 @@ export const removeFavorite = createAsyncThunk(
     }
   }
 );
+export const removebuymovies = createAsyncThunk(
+  "removebuy/movies",
+  async ({ id, movieId }, thunkAPI) => {
+    try {
+      const res = await fetch(`http://localhost:4000/users/removebuy/${id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ movie: movieId }),
+      });
+      const data = await res.json();
+
+      return {id,movieId};
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 
 
@@ -102,6 +122,20 @@ const userSclice = createSlice({
             };
           }
         });
+      })
+      .addCase(removebuymovies.fulfilled, (state, action) => {
+        state.users = state.users.map((item) => {
+          if (item._id === action.payload.id) {
+           
+            return {
+              ...item,
+              buymovies: item.buymovies.filter((i) => {
+                return i._id !== action.payload.movieId;
+              }),
+            };
+          }
+        })
+        
       })
       .addCase(addToFavorite.fulfilled, (state, action) => {
        

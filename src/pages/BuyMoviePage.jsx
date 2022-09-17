@@ -20,7 +20,9 @@ const BuyMoviePage = ({ films }) => {
           ) : (
             <div className={styles.favorite_content}>
               {films.map((item,) => {
-                return <Movie i={item._id} movie={item} />;
+                return <div><Movie i={item._id} movie={item} /> 
+                
+                </div>
               })}
             </div>
           )}

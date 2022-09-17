@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createAction } from "@reduxjs/toolkit";
+import {store} from "../app/store" 
 const initialState = {
   movies: [],
   moviesFilter: [],
@@ -66,13 +67,16 @@ export const buymovies = createAsyncThunk(
         body: JSON.stringify({ movie: movieId }),
       });
       const data = await res.json();
-
+      
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+
+
 
 const moviesSclice = createSlice({
   name: "movie",
@@ -108,7 +112,8 @@ const moviesSclice = createSlice({
             item.buyUsers.push(action.payload.user);
           }
         });
-      });
+      })
+      
   },
 });
 export const { filterMovies } = moviesSclice.actions;
