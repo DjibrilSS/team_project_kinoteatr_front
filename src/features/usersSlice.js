@@ -68,26 +68,7 @@ export const removeFavorite = createAsyncThunk(
   }
 );
 
-export const buymovies = createAsyncThunk(
-  "buy/movies",
-  async ({ userid, movieId }, thunkAPI) => {
-    try {
-      const res = await fetch(`http://localhost:4000/users/buy/${userid}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ movie: movieId }),
-      });
-      const data = await res.json();
 
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 
 const userSclice = createSlice({
   name: "user",
@@ -96,8 +77,10 @@ const userSclice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(fetchUser.rejected, (state, action) => {
+     
       state.error = action.payload
       state.load = false
+     
       
     })
       .addCase(fetchUser.fulfilled, (state, action) => {
@@ -128,13 +111,7 @@ const userSclice = createSlice({
           }
         });
       })
-      .addCase(buymovies.fulfilled, (state, action) => {
-        state.users.map((item) => {
-          if (item._id === action.payload.user._id) {
-            item.buymovies.push(action.payload.movie);
-          }
-        });
-      });
+      
   },
 });
 

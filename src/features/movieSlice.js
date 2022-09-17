@@ -53,6 +53,26 @@ export const fetchmovies = createAsyncThunk(
     }
   }
 );
+export const buymovies = createAsyncThunk(
+  "buy/movies",
+  async ({ userid, movieId }, thunkAPI) => {
+    try {
+      const res = await fetch(`http://localhost:4000/users/buy/${userid}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ movie: movieId }),
+      });
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const moviesSclice = createSlice({
   name: "movie",
@@ -82,6 +102,13 @@ const moviesSclice = createSlice({
         state.comments.push(action.payload)
         state.load = false;
       })
+      .addCase(buymovies.fulfilled, (state, action) => {
+        state.movies.map((item) => {
+          if (item._id === action.payload.movie._id) {
+            item.buyUsers.push(action.payload.user);
+          }
+        });
+      });
   },
 });
 export const { filterMovies } = moviesSclice.actions;

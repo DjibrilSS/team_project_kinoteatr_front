@@ -1,36 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
-import { fetchmovies } from "../features/movieSlice";
+import { fetchmovies,buymovies } from "../features/movieSlice";
 import Alert from "@mui/material/Alert";
-import { buymovies, fetchUser } from "../features/usersSlice";
+import { fetchUser } from "../features/usersSlice";
 import Comments from "./Comments";
 const MoviePage = () => {
  
   const dispatch = useDispatch();
-
+  const token = useSelector((state)=> state.application.token)
   const error = useSelector((state)=> state.users.error)
   const userid = useSelector((state)=> state.application.id)
   const load = useSelector((state)=> state.users.load)
+  const load2 = useSelector((state)=> state.movies.movies)
+  const [active,setactive] = useState(false)
+  
 
   const { id } = useParams();
   const user = useSelector((state) => state.users.users);
   useEffect(() => {
     dispatch(fetchmovies());
-    dispatch(fetchUser());
+   if(token){
+    dispatch(fetchUser())
+   } 
   }, [dispatch]);
   const notify = () =>
   toast("Вы должны сперва авторизироваться", {
     type: "error",
   });
+  const notifisucces = () =>
+  toast("Куплено", {
+    type: "success",
+  });
   const handlebuy = (movieId) => {
 
-    if(error){
+    if(!token){
       return notify()
     }
+    
     dispatch(buymovies({userid,movieId}));
+    notifisucces()
 
   };
 
@@ -38,14 +49,14 @@ const MoviePage = () => {
 
   return (
     <>
-      {load ? (
-        <div class="wrapper">
-          <div class="circle"></div>
-          <div class="circle"></div>
-          <div class="circle"></div>
-          <div class="shadow"></div>
-          <div class="shadow"></div>
-          <div class="shadow"></div>
+      {load && load2 ? (
+        <div className="wrapper">
+          <div className="circle"></div>
+          <div className="circle"></div>
+          <div className="circle"></div>
+          <div className="shadow"></div>
+          <div className="shadow"></div>
+          <div className="shadow"></div>
         </div>
       ) : (
         movies.map((item) => {
@@ -55,16 +66,8 @@ const MoviePage = () => {
                 <div key={item._id} className={styles.movie_page}>
                   <h1>{item.title}</h1>
                   <div className={styles.treiler}>
-                    {item.price < 1 ? (
-                      <iframe
-                        width="90%"
-                        height="500px"
-                        src="https://www.youtube.com/embed/eIqjPDpE-_c"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                      ></iframe>
+                    { item.price < 1  || (item.buyUsers.find((i) => i._id === userid))  ?  (
+                      <div></div>
                     ) : (
                       <div className={styles.alert}>
                         <Alert variant="filled" severity="error">
