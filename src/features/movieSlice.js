@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createAction } from "@reduxjs/toolkit";
-import {store} from "../app/store" 
+import { store } from "../app/store";
 const initialState = {
   movies: [],
   moviesFilter: [],
   load: false,
   comments: [],
+  isVisible: false,
 };
 
 export const fetchComments = createAsyncThunk(
@@ -67,7 +68,27 @@ export const buymovies = createAsyncThunk(
         body: JSON.stringify({ movie: movieId }),
       });
       const data = await res.json();
-      
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const rateMovie = createAsyncThunk(
+  "rate/movies",
+  async ({ rating, movieId }, thunkAPI) => {
+    try {
+      const res = await fetch(`http://localhost:4000/movies`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${thunkAPI.getState().application.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ rating, movieId }),
+      });
+      const data = await res.json();
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -75,15 +96,15 @@ export const buymovies = createAsyncThunk(
   }
 );
 
-
-
-
 const moviesSclice = createSlice({
   name: "movie",
   initialState,
   reducers: {
     filterMovies: (state, action) => {
       state.moviesFilter = state.movies.filter((item) => {});
+    },
+    showRating: (state, action) => {
+      state.isVisible = !state.isVisible;
     },
   },
   extraReducers: (builder) => {
@@ -103,7 +124,7 @@ const moviesSclice = createSlice({
         state.load = false;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        state.comments.push(action.payload)
+        state.comments.push(action.payload);
         state.load = false;
       })
       .addCase(buymovies.fulfilled, (state, action) => {
@@ -113,9 +134,16 @@ const moviesSclice = createSlice({
           }
         });
       })
-      
+      .addCase(rateMovie.fulfilled, (state, action) => {
+        state.movies = state.movies.map((item) => {
+          if (item._id === action.payload._id) {
+            item.rating = action.payload.rating;
+          }
+          return item;
+        });
+      });
   },
 });
-export const { filterMovies } = moviesSclice.actions;
+export const { filterMovies, showRating } = moviesSclice.actions;
 
 export default moviesSclice.reducer;
