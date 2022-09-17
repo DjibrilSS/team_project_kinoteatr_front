@@ -8,6 +8,7 @@ const Header = () => {
     const handleExit = () =>{
          localStorage.clear()
          window.location.reload()
+         window.location.href = "/"
     }
     return (
         <div className={styles.header}>
@@ -32,7 +33,7 @@ const Header = () => {
                        :
                        <ul className={styles.nav_link_exit}>
                         <li><Link onClick={handleExit} to="/">Выйти</Link></li>
-                        <li><Link o to="/user">Личный кабинет</Link></li>
+                        <li><Link o to="/user/like">Личный кабинет</Link></li>
                        </ul>
                     }
                         

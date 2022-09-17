@@ -7,8 +7,10 @@ import styles from "../components/styles/userPages.module.css";
 import { Link } from "react-router-dom";
 import avatar from "./dSxCxs3Vgzk.jpg"
 import { Avatar } from "@mui/material";
+import { Outlet } from "react-router-dom";
 import FavoritePages from "./FavoritePages";
-import { useParams } from "react-router-dom";
+
+import BuyMoviePage from "./BuyMoviePage";
 const UserPages = () => {
   const [active,setActive]= useState("Избранное")
   const dispatch = useDispatch();
@@ -36,14 +38,19 @@ const UserPages = () => {
 
             <div className={styles.user_nav}>
               <div onClick={()=> setActive("Избранное")} className={styles.user_nav_item}>
-               <Link to = "/user/"><button className={styles.lk_btn}><b>Избранное</b></button></Link>
+               <Link to = "/user/like"><button className={styles.lk_btn}><b>Избранное</b></button></Link>
               </div>
               <div onClick={()=> setActive("Купленные")} className={styles.user_nav_item}>
               <Link to = "/user/buy"><button className={styles.lk_btn}><b>Купленные</b></button></Link>
               </div>
               
             </div>
-            <FavoritePages title = {active} films = {active === "Избранное" ? item.movies : item.buymovies} />
+         
+              <div>
+              <Outlet />
+                </div>
+               
+            {/* <FavoritePages title = {active} films = {active === "Избранное" ? item.movies : item.buymovies} /> */}
           </>
         );
       })}

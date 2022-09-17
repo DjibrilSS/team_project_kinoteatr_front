@@ -10,20 +10,18 @@ import styles from "../components/styles/main.module.css";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../features/usersSlice";
 const MainPages = () => {
-  const [value,setvalue] = useState("")
+  const [value, setvalue] = useState("");
   const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
-  const token = useSelector((state)=> state.application.token)
+  const token = useSelector((state) => state.application.token);
 
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
-    if(token){
-      dispatch(fetchUser())
+    if (token) {
+      dispatch(fetchUser());
     }
-    
-    
   }, [dispatch]);
   const categories = ["Все", "Платные", "Бесплатные"];
   const years = [
@@ -58,9 +56,9 @@ const MainPages = () => {
   const onclickCategory = (index) => {
     setActive(index);
   };
-  const filterinput = movies.filter((item)=>{
-    return item.title.toLowerCase().includes(value.toLowerCase().toString())
-  })
+  const filterinput = movies.filter((item) => {
+    return item.title.toLowerCase().includes(value.toLowerCase().toString());
+  });
 
   const filteredgenre = filterinput.filter((item) => {
     if (!titleGenreid || titleGenreid === "Все жанры") {
@@ -95,7 +93,6 @@ const MainPages = () => {
     }
   });
 
-
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
@@ -117,7 +114,7 @@ const MainPages = () => {
             );
           })}
         </div>
-       
+
         <div>
           {" "}
           <div className={styles.dropdown}>
@@ -131,7 +128,7 @@ const MainPages = () => {
                   Все жанры
                 </Link>
               </li>
-              {genres.map((genre,index) => {
+              {genres.map((genre, index) => {
                 return (
                   <li key={index}>
                     <Link
@@ -156,7 +153,7 @@ const MainPages = () => {
                   Все года
                 </Link>
               </li>
-              {years.map((i,index) => {
+              {years.map((i, index) => {
                 return (
                   <li key={index}>
                     <Link onClick={() => handleClickYears(i)} to={`/`}>
@@ -175,7 +172,7 @@ const MainPages = () => {
                   Все страны
                 </Link>
               </li>
-              {country.map((i,index) => {
+              {country.map((i, index) => {
                 return (
                   <li key={index}>
                     <Link onClick={() => handleClickCountry(i)} to={`/`}>
@@ -188,7 +185,13 @@ const MainPages = () => {
           </div>
         </div>
         <div className="textInputWrapper">
-          <input value = {value} onChange= {(e)=> setvalue(e.target.value)} placeholder="Type Here" type="text" className="textInput" />
+          <input
+            value={value}
+            onChange={(e) => setvalue(e.target.value)}
+            placeholder="Type Here"
+            type="text"
+            className="textInput"
+          />
         </div>
       </div>
       <div className={styles.main_content}>
@@ -202,8 +205,12 @@ const MainPages = () => {
             <div className="shadow"></div>
           </div>
         ) : (
-          filterPaid.map((movie,i) => {
-            return <div key={i}><Movie i={i} movie={movie} /></div>
+          filterPaid.map((movie, i) => {
+            return (
+              <div key={i}>
+                <Movie i={i} movie={movie} />
+              </div>
+            );
           })
         )}
       </div>
