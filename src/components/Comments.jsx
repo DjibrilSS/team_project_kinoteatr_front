@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles/moviePage.module.css";
+import { ToastContainer, toast } from "react-toastify";
 import { fetchComments } from "../features/movieSlice";
 import { useParams } from "react-router-dom";
 import { addComment } from "../features/movieSlice";
 import Comment from "./Comment";
 
 const Comments = () => {
+  const token = useSelector((state)=> state.application.token)
   const [comment, setComment] = useState();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const notify = () =>
+    toast("Вы должны сперва авторизироваться", {
+      type: "error",
+    });
 
   const user = useSelector((state) => state.application.id);
 
@@ -17,13 +23,14 @@ const Comments = () => {
     dispatch(fetchComments());
   }, [dispatch]);
 
- 
-
   const handleChange = (e) => {
     setComment(e.target.value);
   };
 
   const handleAddComment = ({ comment }) => {
+    if(!token){
+      return notify()
+    }
     dispatch(addComment({ comment, id, user }));
     setComment("");
   };
@@ -43,7 +50,7 @@ const Comments = () => {
             Добавить
           </button>
         </div>
-    <Comment id={id} />
+        <Comment id={id} />
       </div>
     </>
   );

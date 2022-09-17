@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/movie.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
+import { Button } from "@mui/material";
+import { removebuymovies } from "../features/usersSlice";
 
 const Movie = ({ movie,i }) => {
   const token = useSelector((state) => state.application.token);
 
   const dispatch = useDispatch();
+  const params = useParams()
+  const idroute = params.id
   const id = useSelector((state) => state.application.id);
   const user = useSelector((state) => state.users.users);
   const error= useSelector((state)=> state.users.error)
@@ -31,6 +35,10 @@ const Movie = ({ movie,i }) => {
     notify();
     dispatch(addToFavorite({ id, movieId }));
   };
+
+  const handledelete = (movieId)=>{
+    dispatch(removebuymovies({id,movieId}))
+  }
 
   return (
     <div key={i} className={styles.movie_card}>
@@ -61,6 +69,7 @@ const Movie = ({ movie,i }) => {
           <div className={styles.movie_inner}>
           {movie.price === 0 ? "Бесплатно" : `Платный`}
         </div>
+        {idroute === "buy" ? <Button onClick={()=> handledelete(movie._id)}>Удалить</Button> : null}
         </div>
         
       </div>

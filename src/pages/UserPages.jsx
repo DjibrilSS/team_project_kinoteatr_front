@@ -36,10 +36,10 @@ const UserPages = () => {
 
             <div className={styles.user_nav}>
               <div onClick={()=> setActive("Избранное")} className={styles.user_nav_item}>
-                <button className={styles.lk_btn}><b>Избранное</b></button>
+               <Link to = "/user/"><button className={styles.lk_btn}><b>Избранное</b></button></Link>
               </div>
               <div onClick={()=> setActive("Купленные")} className={styles.user_nav_item}>
-              <button className={styles.lk_btn}><b>Купленные</b></button>
+              <Link to = "/user/buy"><button className={styles.lk_btn}><b>Купленные</b></button></Link>
               </div>
               
             </div>
