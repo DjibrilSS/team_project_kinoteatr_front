@@ -14,10 +14,15 @@ const MainPages = () => {
   const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
+  const token = useSelector((state)=> state.application.token)
 
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
+    if(token){
+      dispatch(fetchUser())
+    }
+    
     
   }, [dispatch]);
   const categories = ["ВСЕ", "Платные", "Бесплатные"];
@@ -126,9 +131,9 @@ const MainPages = () => {
                   Все жанры
                 </Link>
               </li>
-              {genres.map((genre) => {
+              {genres.map((genre,index) => {
                 return (
-                  <li>
+                  <li key={index}>
                     <Link
                       onClick={() =>
                         handleClickGenre(genre.nameGenre, genre._id)
@@ -151,9 +156,9 @@ const MainPages = () => {
                   Все года
                 </Link>
               </li>
-              {years.map((i) => {
+              {years.map((i,index) => {
                 return (
-                  <li>
+                  <li key={index}>
                     <Link onClick={() => handleClickYears(i)} to={`/`}>
                       {i}
                     </Link>
@@ -170,9 +175,9 @@ const MainPages = () => {
                   Все страны
                 </Link>
               </li>
-              {country.map((i) => {
+              {country.map((i,index) => {
                 return (
-                  <li>
+                  <li key={index}>
                     <Link onClick={() => handleClickCountry(i)} to={`/`}>
                       {i}
                     </Link>
@@ -182,23 +187,23 @@ const MainPages = () => {
             </ul>
           </div>
         </div>
-        <div class="textInputWrapper">
-          <input value = {value} onChange= {(e)=> setvalue(e.target.value)} placeholder="Type Here" type="text" class="textInput" />
+        <div className="textInputWrapper">
+          <input value = {value} onChange= {(e)=> setvalue(e.target.value)} placeholder="Type Here" type="text" className="textInput" />
         </div>
       </div>
       <div className={styles.main_content}>
         {load ? (
-          <div class="wrapper">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
+          <div className="wrapper">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="shadow"></div>
+            <div className="shadow"></div>
+            <div className="shadow"></div>
           </div>
         ) : (
           filterPaid.map((movie,i) => {
-            return <Movie i={i} movie={movie} />;
+            return <div key={i}><Movie i={i} movie={movie} /></div>
           })
         )}
       </div>

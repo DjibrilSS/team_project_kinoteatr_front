@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../features/applicationSlice";
 
 const SingIn = () => {
+  const token = useSelector((state)=> state.application.token)
   const dispatch = useDispatch();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +18,7 @@ const SingIn = () => {
     setLogin("");
     setPassword("");
     dispatch(loginThunk({ login, password }));
-   
+  
   };
 
   return (
