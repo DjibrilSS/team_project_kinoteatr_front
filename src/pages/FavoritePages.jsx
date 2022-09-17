@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "../components/styles/favorite.module.css";
 import Movie from "../components/Movie";
+import { useSelector } from "react-redux";
 const FavoritePages = ({ films,title }) => {
+  const user = useSelector((state)=> state.users.users)
   return (
     <>
       <div className={styles.favorite_bg}>
         <div className={styles.favorite_title}>
           <h2>{title}</h2>
         </div>
-        {films.length < 1 ? (
+        {user[0].movies.length < 1 ? (
           <>
             <div>
               <h1>Здесь пока ничего нет</h1>
@@ -19,7 +21,7 @@ const FavoritePages = ({ films,title }) => {
           </>
         ) : (
           <div className={styles.favorite_content}>
-            {films.map((item) => {
+            {user[0].movies.map((item) => {
               return <Movie i={item._id} movie={item} />;
             })}
           </div>

@@ -4,13 +4,15 @@ import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
 import { Button } from "@mui/material";
 import { removebuymovies } from "../features/usersSlice";
 
 const Movie = ({ movie,i }) => {
   const token = useSelector((state) => state.application.token);
-
+  const path = useLocation()
+ 
   const dispatch = useDispatch();
   const params = useParams()
   const idroute = params.id
@@ -69,7 +71,7 @@ const Movie = ({ movie,i }) => {
           <div className={styles.movie_inner}>
           {movie.price === 0 ? "Бесплатно" : `Платный`}
         </div>
-        {idroute === "buy" ? <Button onClick={()=> handledelete(movie._id)}>Удалить</Button> : null}
+        {path.pathname === "/user/buy" ? <Button onClick={()=> handledelete(movie._id)}>Удалить</Button> : null}
         </div>
         
       </div>
