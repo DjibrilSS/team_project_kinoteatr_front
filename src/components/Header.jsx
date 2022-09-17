@@ -8,6 +8,7 @@ const Header = () => {
     const handleExit = () =>{
          localStorage.clear()
          window.location.reload()
+         window.location.href = "/"
     }
     return (
         <div className={styles.header}>
