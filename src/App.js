@@ -9,8 +9,12 @@ import SingUp from "./components/SingUp";
 
 import UserPages from "./pages/UserPages";
 import { useSelector } from "react-redux";
+
+import Footer from "./components/Footer";
+
 import BuyMoviePage from "./pages/BuyMoviePage";
 import FavoritePages from "./pages/FavoritePages";
+
 
 function App() {
   const token = useSelector((state)=> state.application.token)
@@ -34,6 +38,7 @@ function App() {
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/subscribe" element={<UserPages />} />
         </Routes>
+        <Footer/>
       </div>
       )
     
@@ -47,6 +52,7 @@ function App() {
           <Route path="/auth" element={<SingUp />} />
           <Route path="/movie/:id" element={<MoviePage />} />
         </Routes>
+        <Footer/>
       </div>
     )
     
