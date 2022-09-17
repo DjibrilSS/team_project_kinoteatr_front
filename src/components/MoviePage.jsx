@@ -3,21 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import styles from "../components/styles/moviePage.module.css";
-import { fetchmovies,buymovies } from "../features/movieSlice";
+import { fetchmovies, buymovies, showRating } from "../features/movieSlice";
 import Alert from "@mui/material/Alert";
 
 import Comments from "./Comments";
+import Rating from "./Rating";
 
 const MoviePage = () => {
- 
   const dispatch = useDispatch();
-  const token = useSelector((state)=> state.application.token)
-  const error = useSelector((state)=> state.users.error)
-  const userid = useSelector((state)=> state.application.id)
-  const load = useSelector((state)=> state.users.load)
-  const load2 = useSelector((state)=> state.movies.movies)
-
-  
+  const token = useSelector((state) => state.application.token);
+  const error = useSelector((state) => state.users.error);
+  const userid = useSelector((state) => state.application.id);
+  const load = useSelector((state) => state.users.load);
+  const load2 = useSelector((state) => state.movies.movies);
+  const visible = useSelector((state) => state.movies.isVisible);
 
   const { id } = useParams();
 
@@ -25,22 +24,24 @@ const MoviePage = () => {
     dispatch(fetchmovies());
   }, [dispatch]);
   const notify = () =>
-  toast("Вы должны сперва авторизироваться", {
-    type: "error",
-  });
+    toast("Вы должны сперва авторизироваться", {
+      type: "error",
+    });
   const notifisucces = () =>
-  toast("Куплено", {
-    type: "success",
-  });
+    toast("Куплено", {
+      type: "success",
+    });
   const handlebuy = (movieId) => {
-
-    if(!token){
-      return notify()
+    if (!token) {
+      return notify();
     }
-    
-    dispatch(buymovies({userid,movieId}));
-    notifisucces()
 
+    dispatch(buymovies({ userid, movieId }));
+    notifisucces();
+  };
+  const handleRated = () => {
+    dispatch(showRating());
+    console.log("s");
   };
 
   const movies = useSelector((state) => state.movies.movies);
@@ -64,7 +65,8 @@ const MoviePage = () => {
                 <div key={item._id} className={styles.movie_page}>
                   <h1>{item.title}</h1>
                   <div className={styles.treiler}>
-                    { item.price < 1  || (item.buyUsers.find((i) => i._id === userid))  ?  (
+                    {item.price < 1 ||
+                    item.buyUsers.find((i) => i._id === userid) ? (
                       <div></div>
                     ) : (
                       <div className={styles.alert}>
@@ -109,6 +111,17 @@ const MoviePage = () => {
                             return ` ${actor}, `;
                           })}
                         </li>
+                        <li className="movieLi">
+                          <div className="rating">{item.rating}</div>{" "}
+                          {token ? (
+                            <button
+                              onClick={handleRated}
+                              className="ratedButton"
+                            >
+                              Оценить
+                            </button>
+                          ) : null}
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -118,6 +131,7 @@ const MoviePage = () => {
                 <hr />
                 <Comments />
                 <hr />
+                {visible ? <Rating id={id} /> : null}
               </>
             );
           }
