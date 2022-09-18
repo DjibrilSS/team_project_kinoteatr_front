@@ -189,7 +189,7 @@ const MainPages = () => {
           <input
             value={value}
             onChange={(e) => setvalue(e.target.value)}
-            placeholder="Type Here"
+            placeholder="Поиск"
             type="text"
             className="textInput"
           />

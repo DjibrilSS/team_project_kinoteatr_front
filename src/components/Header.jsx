@@ -17,7 +17,7 @@ const Header = () => {
       <div className={styles.nav_menu}>
         <div className={styles.header_logo}>
           <Link to="/">
-            <h1>BOMBIBBO</h1>
+            <h1>BOMBIBBO.TV</h1>
           </Link>
         </div>
         {/* <div className={styles.nav_link}>
