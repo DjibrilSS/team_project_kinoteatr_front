@@ -253,9 +253,40 @@ body {
   font-size: large;
   margin-left: 5%;
 }
-.rating {
+.rating6-10 {
+  display: flex;
+  justify-content: center;
   background-color: green;
-  width: fit-content;
+  width: 15%;
+  box-sizing: border-box;
+  padding: 2%;
+  margin-bottom: 3%;
+}
+.rating3-6 {
+  display: flex;
+  justify-content: center;
+  background-color: yellow;
+  width: 15%;
+  box-sizing: border-box;
+  padding: 2%;
+  margin-bottom: 3%;
+  color: grey;
+}
+.rating1-3 {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  width: 15%;
+  box-sizing: border-box;
+  padding: 2%;
+  margin-bottom: 3%;
+  color: black
+}
+.rating0 {
+  display: flex;
+  justify-content: center;
+  background-color: grey;
+  width: 15%;
   box-sizing: border-box;
   padding: 2%;
   margin-bottom: 3%;

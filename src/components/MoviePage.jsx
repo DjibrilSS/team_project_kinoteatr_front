@@ -112,7 +112,19 @@ const MoviePage = () => {
                           })}
                         </li>
                         <li className="movieLi">
-                          <div className="rating">{item.rating}</div>{" "}
+                          <div
+                            className={
+                              item.rating === 0
+                                ? "rating0"
+                                : item.rating <= 3
+                                ? "rating1-3"
+                                : item.rating <= 6
+                                ? "rating3-6"
+                                : "rating6-10"
+                            }
+                          >
+                            {item.rating}
+                          </div>{" "}
                           {token ? (
                             <button
                               onClick={handleRated}
