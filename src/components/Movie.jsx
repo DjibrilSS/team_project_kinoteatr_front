@@ -10,16 +10,18 @@ import { addToFavorite, removeFavorite } from "../features/usersSlice";
 import { Button } from "@mui/material";
 import { removebuymovies } from "../features/usersSlice";
 
+
 const Movie = ({ movie }) => {
+
   const token = useSelector((state) => state.application.token);
-  const path = useLocation()
- 
+  const path = useLocation();
+
   const dispatch = useDispatch();
-  const params = useParams()
-  const idroute = params.id
+  const params = useParams();
+  const idroute = params.id;
   const id = useSelector((state) => state.application.id);
   const user = useSelector((state) => state.users.users);
-  const error= useSelector((state)=> state.users.error)
+  const error = useSelector((state) => state.users.error);
   const notify = () =>
     toast("Фильм добавлен в избранное!", {
       type: "success",
@@ -39,9 +41,9 @@ const Movie = ({ movie }) => {
     dispatch(addToFavorite({ id, movieId }));
   };
 
-  const handledelete = (movieId)=>{
-    dispatch(removebuymovies({id,movieId}))
-  }
+  const handledelete = (movieId) => {
+    dispatch(removebuymovies({ id, movieId }));
+  };
 
   return (
     <div className={styles.movie_card}>
@@ -69,12 +71,26 @@ const Movie = ({ movie }) => {
               </div>
             ) : null}
           </div>
+          <div
+            className={
+              movie.rating === 0
+                ? "rating0"
+                : movie.rating <= 3
+                ? "rating1-3"
+                : movie.rating <= 6
+                ? "rating3-6"
+                : "rating6-10"
+            }
+          >
+            {movie.rating}
+          </div>
           <div className={styles.movie_inner}>
-          {movie.price === 0 ? "Бесплатно" : `Платный`}
+            {movie.price === 0 ? "Бесплатно" : `Платный`}
+          </div>
+          {path.pathname === "/user/buy" ? (
+            <Button onClick={() => handledelete(movie._id)}>Удалить</Button>
+          ) : null}
         </div>
-        {path.pathname === "/user/buy" ? <Button onClick={()=> handledelete(movie._id)}>Удалить</Button> : null}
-        </div>
-        
       </div>
       <ToastContainer />
     </div>
