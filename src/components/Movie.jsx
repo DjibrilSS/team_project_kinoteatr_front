@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/movie.module.css";
+import PropTypes from "prop-types"
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,7 +10,7 @@ import { addToFavorite, removeFavorite } from "../features/usersSlice";
 import { Button } from "@mui/material";
 import { removebuymovies } from "../features/usersSlice";
 
-const Movie = ({ movie,i }) => {
+const Movie = ({ movie }) => {
   const token = useSelector((state) => state.application.token);
   const path = useLocation()
  
@@ -43,7 +44,7 @@ const Movie = ({ movie,i }) => {
   }
 
   return (
-    <div key={i} className={styles.movie_card}>
+    <div className={styles.movie_card}>
       <div className={styles.movie_card_content}>
         <Link to={`/movie/${movie._id}`}>
           <div className={styles.movie_image}>
@@ -81,3 +82,12 @@ const Movie = ({ movie,i }) => {
 };
 
 export default Movie;
+
+Movie.propTypes = {
+  movie: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
+      image:PropTypes.string.isRequired,
+     
+  }).isRequired,
+}

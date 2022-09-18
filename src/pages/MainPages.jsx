@@ -208,7 +208,7 @@ const MainPages = () => {
           filterPaid.map((movie, i) => {
             return (
               <div key={i}>
-                <Movie i={i} movie={movie} />
+                <Movie movie={movie} />
               </div>
             );
           })

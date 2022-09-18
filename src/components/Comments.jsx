@@ -13,7 +13,7 @@ const Comments = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const notify = () =>
-    toast("Вы должны сперва авторизироваться", {
+    toast("Вы должны сперва авторизоваться", {
       type: "error",
     });
 
