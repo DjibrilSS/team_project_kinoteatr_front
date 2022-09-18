@@ -142,6 +142,8 @@ console.log(load2)
                   <p className={styles.description}>{item.description}</p>
                   <ToastContainer />
                 </div>
+                <div className="videoContainer"><video id="videoPlayer" controls width="60%" poster={`http://localhost:4000/images/${item.poster}`}>
+                  <source src={`http://localhost:4000/video/${item.video}`} type="video/mp4" /></video></div>
                 <hr />
                 <Comments />
                 <hr />
