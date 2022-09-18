@@ -6,23 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { message, Popconfirm } from 'antd';
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
 import { Button } from "@mui/material";
 import { removebuymovies } from "../features/usersSlice";
 
 const Movie = ({ movie }) => {
-  const confirm = (e,movieId) => {
-    dispatch(removebuymovies({ id, movieId }));
-    console.log(e);
-    message.success('Вы удалили');
-    console.log(movieId)
-  };
-  
-  const cancel = (e) => {
-    console.log(e);
-    message.error('Вы не удалили');
-  };
   const token = useSelector((state) => state.application.token);
   const path = useLocation();
 
@@ -52,7 +40,8 @@ const Movie = ({ movie }) => {
   };
 
   const handledelete = (movieId) => {
-   
+    dispatch(removebuymovies({ id, movieId }));
+    notifydelete()
   };
 
   return (
@@ -98,14 +87,7 @@ const Movie = ({ movie }) => {
             {movie.price === 0 ? "Бесплатно" : `Платный`}
           </div>
           {path.pathname === "/user/buy" ? (
-             <Popconfirm
-             title="Вы точно хотите удалить?"
-             onConfirm={(e)=>confirm(e,movie._id)}
-             onCancel={cancel}
-             okText="Yes"
-             cancelText="No"
-           >
-              <button   className="btn_delete">
+            <button  onClick={() => handledelete(movie._id)} className="btn_delete">
               <span className="text">Удалить</span>
               <span className="icon">
                 <svg
@@ -118,8 +100,6 @@ const Movie = ({ movie }) => {
                 </svg>
               </span>
             </button>
-           </Popconfirm>
-           
           ) : null}
         </div>
       </div>
