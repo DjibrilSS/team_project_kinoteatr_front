@@ -9,6 +9,7 @@ import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../features/usersSlice";
+
 const MainPages = () => {
   const movies = useSelector((state) => state.movies.movies);
   const [value, setvalue] = useState("");
@@ -194,6 +195,7 @@ const MainPages = () => {
           />
         </div>
       </div>
+
       <div className={styles.main_content}>
         {load ? (
           <div class="newtons-cradle">

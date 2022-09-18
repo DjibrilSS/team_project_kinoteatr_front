@@ -1,5 +1,7 @@
 
 import { Navigate, Route, Routes } from "react-router-dom";
+import 'antd/dist/antd.css';
+
 import "./App.css";
 import Header from "./components/Header";
 import MainPages from "./pages/MainPages";

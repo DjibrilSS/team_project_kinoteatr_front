@@ -6,6 +6,7 @@
 body {
   background-color: #100e19;
   font-family: "Roboto", sans-serif;
+  color: white;
 }
 .container {
   width: 90%;
@@ -358,4 +359,10 @@ body {
 
 button{
   border: none;
+}
+h1,h2,h3,h4,h5{
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
 }
