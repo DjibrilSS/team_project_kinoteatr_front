@@ -8,7 +8,7 @@ const FavoritePages = ({ films,title }) => {
     <>
       <div className={styles.favorite_bg}>
         <div className={styles.favorite_title}>
-          <h2>{title}</h2>
+          <h2>Избранное</h2>
         </div>
         {user[0].movies.length < 1 ? (
           <>

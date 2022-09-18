@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/movie.module.css";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { message, Popconfirm } from 'antd';
 import { addToFavorite, removeFavorite } from "../features/usersSlice";
 import { Button } from "@mui/material";
 import { removebuymovies } from "../features/usersSlice";
 
-
 const Movie = ({ movie }) => {
-
+  const confirm = (e,movieId) => {
+    dispatch(removebuymovies({ id, movieId }));
+    console.log(e);
+    message.success('Вы удалили');
+    console.log(movieId)
+  };
+  
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Вы не удалили');
+  };
   const token = useSelector((state) => state.application.token);
   const path = useLocation();
 
@@ -42,7 +52,7 @@ const Movie = ({ movie }) => {
   };
 
   const handledelete = (movieId) => {
-    dispatch(removebuymovies({ id, movieId }));
+   
   };
 
   return (
@@ -88,7 +98,28 @@ const Movie = ({ movie }) => {
             {movie.price === 0 ? "Бесплатно" : `Платный`}
           </div>
           {path.pathname === "/user/buy" ? (
-            <Button onClick={() => handledelete(movie._id)}>Удалить</Button>
+             <Popconfirm
+             title="Вы точно хотите удалить?"
+             onConfirm={(e)=>confirm(e,movie._id)}
+             onCancel={cancel}
+             okText="Yes"
+             cancelText="No"
+           >
+              <button   className="btn_delete">
+              <span className="text">Удалить</span>
+              <span className="icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
+                </svg>
+              </span>
+            </button>
+           </Popconfirm>
+           
           ) : null}
         </div>
       </div>
@@ -101,9 +132,8 @@ export default Movie;
 
 Movie.propTypes = {
   movie: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      _id: PropTypes.string.isRequired,
-      image:PropTypes.string.isRequired,
-     
+    title: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }).isRequired,
-}
+};

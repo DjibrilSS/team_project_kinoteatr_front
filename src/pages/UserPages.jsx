@@ -33,7 +33,7 @@ const UserPages = () => {
               src={avatar}
               sx={{ width: 56, height: 56 }}
             />
-              <h2>{item.login}</h2>
+             <div className={styles.user_login}> <span>{item.login}</span></div>
             </div>
 
             <div className={styles.user_nav}>
