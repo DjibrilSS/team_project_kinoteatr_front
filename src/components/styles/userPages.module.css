@@ -9,6 +9,16 @@ body{
     width:170px;
 }
 
+.user_login{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.user_login span{
+    font-size: 35px;
+    font-weight: 700;
+}
+
 .user_nav{
     margin: auto;
     margin-top: 20px;

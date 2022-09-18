@@ -30,24 +30,29 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 4px;
+  padding: 2px 0;
   height: 32px;
 }
 
 .categoryfilters_item div {
   width: 33%;
   padding: 0;
+  margin: 0;
+}
+.categoryfilters_item div span{
+  display: flex;
+  justify-content: center;
 }
 .categoryActive {
   background-color: transparent;
   border-radius: 4px;
   color: #1b1b1b;
   font-weight: 700;
-  background-color: #939693;
+  background-color: #ffffff;
   cursor: pointer;
   font-size: 15px;
   line-height: 28px;
-  margin: 0 2px;
+  margin: 0;
   padding: 2px 16px;
   white-space: nowrap;
 }
