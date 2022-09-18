@@ -5,6 +5,7 @@
   transition: all 0.3s;
   background-image: linear-gradient(163deg, #00ff75 0%, #f2a100 100%);
   border-radius: 8px;
+  
 }
 
 .movie_card_content {

@@ -2,9 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "../components/styles/header.module.css";
-
-
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 const Header = () => {
+  const load = useSelector((state)=> state.users.load)
+  const user = useSelector((state)=> state.users.users)
   const token = useSelector((state) => state.application.token);
   const handleExit = () => {
     localStorage.clear();
@@ -46,8 +49,10 @@ const Header = () => {
                 <Link o to="/user/like">
                   Личный кабинет
                 </Link>
+                <Badge badgeContent={4} color="primary">
+                  <PermIdentityIcon color="white" />
+                </Badge>
               </li>
-              
             </ul>
           )}
         </div>
