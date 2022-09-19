@@ -7,17 +7,16 @@
 }
 .main_title {
   color: white;
-  width: 30%;
-  margin: auto;
+  width: 60%;
   font-size: 20px;
 }
 .main_title h2 {
   width: 600px;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .categoryfilters {
-  background-color: #2b2b2b;
+  background-color: #1f1b2e;
   padding: 11px;
   display: flex;
   border-radius: 5px;
@@ -25,29 +24,34 @@
 }
 .categoryfilters_item {
   width: 25%;
-  background-color: #1b1b1b;
+  background-color: #100e19;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 4px;
+  padding: 2px 0;
   height: 32px;
 }
 
 .categoryfilters_item div {
   width: 33%;
   padding: 0;
+  margin: 0;
+}
+.categoryfilters_item div span {
+  display: flex;
+  justify-content: center;
 }
 .categoryActive {
   background-color: transparent;
   border-radius: 4px;
-  color: #1b1b1b;
+  color: #e2e2e2;
   font-weight: 700;
-  background-color: #939693;
+  background-color: #242b47;
   cursor: pointer;
   font-size: 15px;
   line-height: 28px;
-  margin: 0 2px;
+  margin: 0;
   padding: 2px 16px;
   white-space: nowrap;
 }
@@ -67,7 +71,7 @@
 }
 
 .dropbtn {
-  background-color: #191b19;
+  background-color: #100e19;
   color: white;
   border-radius: 5px;
   padding: 8px 16px;
@@ -86,11 +90,50 @@
 .dropdown_content {
   display: none;
   position: absolute;
-  background-color: #1b1b1b;
-  min-width: 160px;
+  background-color: #25233f;
+  min-width: 125px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  height: 210px;
+  overflow-y: scroll;
 }
+
+/*= == = = =Scroll BAR = = = = = == */
+
+.dropdown_content::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  height: 8px; /* высота для горизонтального скролла */
+  background-color: #242b47;
+}
+
+/* ползунок скроллбара */
+.dropdown_content::-webkit-scrollbar-thumb {
+  background-color: #f8c579;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #e9971c;
+}
+
+.dropdown_content::-webkit-scrollbar-thumb:hover {
+  background-color: #f7cb07;
+}
+
+/* Стрелки */
+
+.dropdown_content::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg, #242b47 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(240deg, #242b47 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(0deg, #242b47 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #e6951b;
+}
+
+.dropdown_content::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg, #242b47 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(60deg, #242b47 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(180deg, #242b47 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #e6951b;
+}
+
+/* = = = = = = == = */
 
 /* Ссылки внутри выпадающего списка */
 .dropdown_content a {
@@ -102,7 +145,7 @@
 
 /* Изменение цвета выпадающих ссылок при наведении курсора */
 .dropdown_content a:hover {
-  background-color: #ddd;
+  background-color: #1f1b2e;
 }
 
 /* Показать выпадающее меню при наведении курсора */
@@ -112,6 +155,5 @@
 
 /* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
 .dropdown:hover .dropbtn {
-  background-color: #939693;
+  background-color: #25233f;
 }
-

@@ -1,16 +1,47 @@
 .header_logo h1 {
-  color: #facc6d;
-  font-family: "Arizonia", cursive;
-  
+  color: #fdb830;
+  font-family: "Nova Slim", cursive;
+  margin-top: 10px;
 }
 .header {
   margin-top: 20px;
 }
 
+.signIn_btn {
+  width: 290px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fdb830;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+
+.exit_btn {
+  padding: 8px;
+  border-radius: 8px;
+  background: #fdb830;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+
+.lk_btn {
+  padding: 8px;
+  border-radius: 8px;
+  background: #fdb830;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+
 .nav_menu {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 }
 .nav_link_list {
   display: flex;

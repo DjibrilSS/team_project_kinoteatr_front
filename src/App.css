@@ -6,107 +6,18 @@
 body {
   background-color: #100e19;
   font-family: "Roboto", sans-serif;
+  color: white;
 }
 .container {
   width: 90%;
   margin: auto;
 }
 
-.wrapper {
-  width: 200px;
-  height: 60px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.circle {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  border-radius: 50%;
-  background-color: #fff;
-  left: 15%;
-  transform-origin: 50%;
-  animation: circle7124 0.5s alternate infinite ease;
-}
-
-@keyframes circle7124 {
-  0% {
-    top: 60px;
-    height: 5px;
-    border-radius: 50px 50px 25px 25px;
-    transform: scaleX(1.7);
-  }
-
-  40% {
-    height: 20px;
-    border-radius: 50%;
-    transform: scaleX(1);
-  }
-
-  100% {
-    top: 0%;
-  }
-}
-
-.circle:nth-child(2) {
-  left: 45%;
-  animation-delay: 0.2s;
-}
-
-.circle:nth-child(3) {
-  left: auto;
-  right: 15%;
-  animation-delay: 0.3s;
-}
-
-.shadow {
-  width: 20px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.9);
-  position: absolute;
-  top: 62px;
-  transform-origin: 50%;
-  z-index: -1;
-  left: 15%;
-  filter: blur(1px);
-  animation: shadow046 0.5s alternate infinite ease;
-}
-
-@keyframes shadow046 {
-  0% {
-    transform: scaleX(1.5);
-  }
-
-  40% {
-    transform: scaleX(1);
-    opacity: 0.7;
-  }
-
-  100% {
-    transform: scaleX(0.2);
-    opacity: 0.4;
-  }
-}
-
-.shadow:nth-child(4) {
-  left: 45%;
-  animation-delay: 0.2s;
-}
-
-.shadow:nth-child(5) {
-  left: auto;
-  right: 15%;
-  animation-delay: 0.3s;
-}
-
 .textInputWrapper {
   position: relative;
   width: 180px;
   margin: 0px 5px;
-  --accent-color: #a3e583;
+  --accent-color: #e9971c;
 }
 
 .textInputWrapper:before {
@@ -163,9 +74,9 @@ body {
 
 .textInputWrapper .textInput {
   border-radius: 5px 5px 0px 0px;
-  box-shadow: 0px 2px 5px rgb(35 35 35 / 30%);
+  box-shadow: 0px 2px 5px #100e19;
   max-height: 36px;
-  background-color: #252525;
+  background-color: #100e19;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-duration: 200ms;
   transition-property: background-color;
@@ -187,7 +98,7 @@ body {
 .textInputWrapper:focus-within .textInput,
 .textInputWrapper .textInput:focus,
 .textInputWrapper .textInput:active {
-  background-color: #353535;
+  background-color: #25233f;
 }
 
 .textInputWrapper:focus-within .textInput::placeholder {
@@ -245,25 +156,30 @@ body {
   justify-content: space-between;
 }
 .ratedButton {
-  background-color: rgb(155, 17, 17);
+  background-color: #ff0044;
+  border: none;
   color: white;
   box-sizing: border-box;
   padding: 1.3%;
   height: 80%;
   font-size: large;
   margin-left: 5%;
+  border-radius: 5px;
 }
 .rating6-10 {
   display: flex;
   justify-content: center;
-  background-color: green;
+  background-color: rgb(28, 130, 28);
   width: 15%;
+  border-radius: 5px;
   box-sizing: border-box;
   padding: 2%;
   margin-bottom: 3%;
+  border-radius: 5px;
 }
 .rating3-6 {
   display: flex;
+  border-radius: 5px;
   justify-content: center;
   background-color: yellow;
   width: 15%;
@@ -279,11 +195,13 @@ body {
   width: 15%;
   box-sizing: border-box;
   padding: 2%;
+  border-radius: 5px;
   margin-bottom: 3%;
-  color: black
+  color: rgb(252, 248, 248);
 }
 .rating0 {
   display: flex;
+  border-radius: 5px;
   justify-content: center;
   background-color: grey;
   width: 15%;
@@ -303,5 +221,161 @@ body {
   margin: 0 auto;
 }
 #videoPlayer{
+  margin: 0 auto;
+}
+
+.btn_delete {
+  width: 100%;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #e62222;
+}
+
+.btn_delete,
+button span {
+  transition: 200ms;
+}
+
+.btn_delete .text {
+  transform: translateX(50px);
+  color: white;
+  font-weight: bold;
+}
+
+.btn_delete .icon {
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(150px);
+  height: 35px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn_delete svg {
+  width: 15px;
+  fill: #eee;
+}
+
+.btn_delete:hover {
+  background: #ff3636;
+}
+
+.btn_delete:hover .text {
+  color: transparent;
+}
+
+.btn_delete:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(20px);
+}
+
+.btn_delete:focus {
+  outline: none;
+}
+
+.btn_delete:active .icon svg {
+  transform: scale(0.8);
+}
+
+.newtons-cradle {
+  --uib-size: 50px;
+  --uib-speed: 1.2s;
+  --uib-color: #474554;
+  position: relative;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--uib-size);
+  height: var(--uib-size);
+}
+
+.newtons-cradle__dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 25%;
+  transform-origin: center top;
+}
+
+.newtons-cradle__dot::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 25%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+}
+
+.newtons-cradle__dot:first-child {
+  animation: swing var(--uib-speed) linear infinite;
+}
+
+.newtons-cradle__dot:last-child {
+  animation: swing2 var(--uib-speed) linear infinite;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: ease-out;
+  }
+
+  25% {
+    transform: rotate(70deg);
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    transform: rotate(0deg);
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes swing2 {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: linear;
+  }
+
+  50% {
+    transform: rotate(0deg);
+    animation-timing-function: ease-out;
+  }
+
+  75% {
+    transform: rotate(-70deg);
+    animation-timing-function: ease-in;
+  }
+}
+
+button {
+  border: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+}
+.videoContainer {
+  margin: 0 auto;
+  display: flex;
+}
+#videoPlayer {
   margin: 0 auto;
 }

@@ -9,19 +9,21 @@ import Movie from "../components/Movie";
 import styles from "../components/styles/main.module.css";
 import { Link } from "react-router-dom";
 import { fetchUser } from "../features/usersSlice";
+
 const MainPages = () => {
+  const movies = useSelector((state) => state.movies.movies);
   const [value, setvalue] = useState("");
   const load = useSelector((state) => state.users.load);
   const [active, setActive] = useState(0);
   const dispatch = useDispatch();
+
   const token = useSelector((state) => state.application.token);
 
   useEffect(() => {
     dispatch(fetchmovies());
     dispatch(fetchgenre());
-    if (token) {
-      dispatch(fetchUser());
-    }
+
+    dispatch(fetchUser());
   }, [dispatch]);
   const categories = ["Все", "Платные", "Бесплатные"];
   const years = [
@@ -38,7 +40,6 @@ const MainPages = () => {
   const [titleCountryid, settitleCountryid] = useState();
 
   const genres = useSelector((state) => state.genres.genres);
-  const movies = useSelector((state) => state.movies.movies);
 
   const handleClickGenre = (name, id) => {
     settitleGenre(name);
@@ -96,7 +97,7 @@ const MainPages = () => {
   return (
     <div className={styles.main}>
       <div className={styles.main_title}>
-        <h2>ВСЕ ФИЛЬМЫ</h2>
+        <h2>Список фильмов</h2>
       </div>
       <div className={styles.categoryfilters}>
         <div className={styles.categoryfilters_item}>
@@ -109,7 +110,7 @@ const MainPages = () => {
                   active === i ? styles.categoryActive : styles.categorynoActive
                 }
               >
-                {item}
+                <span>{item}</span>
               </div>
             );
           })}
@@ -188,21 +189,20 @@ const MainPages = () => {
           <input
             value={value}
             onChange={(e) => setvalue(e.target.value)}
-            placeholder="Type Here"
+            placeholder="Поиск"
             type="text"
             className="textInput"
           />
         </div>
       </div>
+
       <div className={styles.main_content}>
         {load ? (
-          <div className="wrapper">
-            <div className="circle"></div>
-            <div className="circle"></div>
-            <div className="circle"></div>
-            <div className="shadow"></div>
-            <div className="shadow"></div>
-            <div className="shadow"></div>
+          <div class="newtons-cradle">
+            <div class="newtons-cradle__dot"></div>
+            <div class="newtons-cradle__dot"></div>
+            <div class="newtons-cradle__dot"></div>
+            <div class="newtons-cradle__dot"></div>
           </div>
         ) : (
           filterPaid.map((movie, i) => {

@@ -8,6 +8,7 @@ import Alert from "@mui/material/Alert";
 
 import Comments from "./Comments";
 import Rating from "./Rating";
+import { fetchUser } from "../features/usersSlice";
 
 const MoviePage = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,16 @@ const MoviePage = () => {
   const error = useSelector((state) => state.users.error);
   const userid = useSelector((state) => state.application.id);
   const load = useSelector((state) => state.users.load);
-  const load2 = useSelector((state) => state.movies.movies);
+  const load2 = useSelector((state) => state.movies.load);
   const visible = useSelector((state) => state.movies.isVisible);
 
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchmovies());
+    if (token) {
+      dispatch(fetchUser());
+    }
   }, [dispatch]);
   const notify = () =>
     toast("Вы должны сперва авторизироваться", {
@@ -41,21 +45,18 @@ const MoviePage = () => {
   };
   const handleRated = () => {
     dispatch(showRating());
-    console.log("s");
   };
-
+  console.log(load2);
   const movies = useSelector((state) => state.movies.movies);
 
   return (
     <>
-      {load && load2 ? (
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
+      {load2 ? (
+        <div class="newtons-cradle">
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
         </div>
       ) : (
         movies.map((item) => {
@@ -140,16 +141,22 @@ const MoviePage = () => {
                   <p className={styles.description}>{item.description}</p>
                   <ToastContainer />
                 </div>
-                <div className="videoDiv">
-                  <video
-                    id="videoPlayer"
-                    controls
-                    width="60%"
-                    poster={`http://localhost:4000/images/${item.poster}`}
-                  >
-                    <source src={`http://localhost:4000/video/${item.video}`} />
-                  </video>
-                </div>
+                {item.price < 1 ||
+                item.buyUsers.find((i) => i._id === userid) ? (
+                  <div className="videoContainer">
+                    <video
+                      id="videoPlayer"
+                      controls
+                      width="60%"
+                      poster={`http://localhost:4000/images/${item.poster}`}
+                    >
+                      <source
+                        src={`http://localhost:4000/video/${item.video}`}
+                        type="video/mp4"
+                      />
+                    </video>
+                  </div>
+                ) : null}
                 <hr />
                 <Comments />
                 <hr />
