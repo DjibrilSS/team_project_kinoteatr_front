@@ -298,3 +298,10 @@ body {
   margin-bottom: 0.00001%;
   display: flex;
 }
+.videoDiv{
+  display: flex;
+  margin: 0 auto;
+}
+#videoPlayer{
+  margin: 0 auto;
+}

@@ -140,6 +140,16 @@ const MoviePage = () => {
                   <p className={styles.description}>{item.description}</p>
                   <ToastContainer />
                 </div>
+                <div className="videoDiv">
+                  <video
+                    id="videoPlayer"
+                    controls
+                    width="60%"
+                    poster={`http://localhost:4000/images/${item.poster}`}
+                  >
+                    <source src={`http://localhost:4000/video/${item.video}`} />
+                  </video>
+                </div>
                 <hr />
                 <Comments />
                 <hr />
