@@ -169,7 +169,7 @@ body {
 .rating6-10 {
   display: flex;
   justify-content: center;
-  background-color: rgb(6, 180, 6);
+  background-color: rgb(28, 130, 28);
   width: 15%;
   border-radius: 5px;
   box-sizing: border-box;
