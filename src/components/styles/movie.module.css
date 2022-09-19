@@ -18,14 +18,14 @@
 }
 
 .movie_card:hover {
-  transform:scaleY(1.03);
+  transform:scale(0.98);
   transform-origin: bottom;
-  transition: 0.4s;
+  transition: 0.3s;
   border-radius: 10px;
 }
 
 .movie_card:hover {
-  box-shadow: 0px 0px 30px 1px rgba(87, 153, 251, 0.3);
+  box-shadow: 0px 0px 50px 10px rgba(87, 153, 251, 0.3);
 }
 
 .movie_image img {
