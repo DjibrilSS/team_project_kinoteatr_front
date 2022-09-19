@@ -23,8 +23,8 @@ const MoviePage = () => {
 
   useEffect(() => {
     dispatch(fetchmovies());
-    if(token){
-      dispatch(fetchUser())
+    if (token) {
+      dispatch(fetchUser());
     }
   }, [dispatch]);
   const notify = () =>
@@ -45,20 +45,19 @@ const MoviePage = () => {
   };
   const handleRated = () => {
     dispatch(showRating());
-    
   };
-console.log(load2)
+  console.log(load2);
   const movies = useSelector((state) => state.movies.movies);
 
   return (
     <>
-      { load2 ? (
-         <div class="newtons-cradle">
-         <div class="newtons-cradle__dot"></div>
-         <div class="newtons-cradle__dot"></div>
-         <div class="newtons-cradle__dot"></div>
-         <div class="newtons-cradle__dot"></div>
-         </div>
+      {load2 ? (
+        <div class="newtons-cradle">
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+        </div>
       ) : (
         movies.map((item) => {
           if (id === item._id) {
@@ -142,8 +141,22 @@ console.log(load2)
                   <p className={styles.description}>{item.description}</p>
                   <ToastContainer />
                 </div>
-                <div className="videoContainer"><video id="videoPlayer" controls width="60%" poster={`http://localhost:4000/images/${item.poster}`}>
-                  <source src={`http://localhost:4000/video/${item.video}`} type="video/mp4" /></video></div>
+                {item.price < 1 ||
+                item.buyUsers.find((i) => i._id === userid) ? (
+                  <div className="videoContainer">
+                    <video
+                      id="videoPlayer"
+                      controls
+                      width="60%"
+                      poster={`http://localhost:4000/images/${item.poster}`}
+                    >
+                      <source
+                        src={`http://localhost:4000/video/${item.video}`}
+                        type="video/mp4"
+                      />
+                    </video>
+                  </div>
+                ) : null}
                 <hr />
                 <Comments />
                 <hr />
